@@ -2,5 +2,4 @@
 
 Run with `cargo run [day number]` (eg. `cargo run 5`) or just `cargo run`.
 
-
-https://adventofcode.com/2022
+If `day number` is "all" (ie. `cargo run all`), it will run all the solved solutions for every day, one after another.
