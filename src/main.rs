@@ -3,6 +3,7 @@ use std::env;
 use std::io;
 
 mod solutions;
+mod utils;
 
 fn main() {
     let sysargs: Vec<String> = env::args().collect();

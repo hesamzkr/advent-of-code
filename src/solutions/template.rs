@@ -1,35 +1,18 @@
 use std::fs;
 
 pub fn run() {
-    let input_str = fs::read_to_string("inputs/input_.txt")
-        .expect("Failed to read file");
+    let input_str = utils::read_input(1);
 
-    // if input is a list of strings
-    let input: Vec<&str> = input_str
-        .split(",")
-        .collect();
+    // dividers: "," | "\n" |
+    let input = utils::list_of_strings(&input_str, "");
+    let input = utils::list_of_integers(&input_str, "");
+    let input = utils::list_of_list_strings(&input_str, "");
+    let input = utils::list_of_list_integers(&input_str, "");
 
-    // if input is a list of integers
-    let input: Vec<i32> = input_str
-        .split(",")
-        .map(|s| s.parse().expect("parse error"))
-        .collect();
-
-    // if input is a list of lists of integers
-    let input: Vec<Vec<u32>> = input_str
-        .split("\n")
-        .map(|s| s.split(",").map(|x| x.parse().unwrap()).collect::<Vec<u32>>())
-        .collect();
-
-
-    // println!("Part One: {}", part_one());
+    println!("Part One: {}", part_one());
     // println!("Part Two: {}", part_two());
 }
 
-fn part_one() {
+fn part_one() {}
 
-}
-
-fn part_two() {
-
-}
+fn part_two() {}
