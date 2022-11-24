@@ -1,13 +1,11 @@
-mod day_1;
+mod day1;
+
+use crate::solve;
+use day1::Day1;
 
 pub fn run(day: u16) {
-    println!("\nDay {}", day);
     match day {
-        1 => day_1::run(),
+        1 => solve!(struct Day1, day),
         _ => println!("Invalid day number"),
     };
-}
-
-pub fn latest_solution() -> u16 {
-    1
 }

@@ -1,18 +1,17 @@
-use std::fs;
+use crate::lib::Solution;
 
-pub fn run() {
-    let input_str = utils::read_input(1);
+pub struct DayX;
 
-    // dividers: "," | "\n" |
-    let input = utils::list_of_strings(&input_str, "");
-    let input = utils::list_of_integers(&input_str, "");
-    let input = utils::list_of_list_strings(&input_str, "");
-    let input = utils::list_of_list_integers(&input_str, "");
+impl Solution for DayX {
+    type Parsed = Vec<&str>;
+    type PartOneOutput = usize;
+    type PartTwoOutput = usize;
 
-    println!("Part One: {}", part_one());
-    // println!("Part Two: {}", part_two());
+    fn parse(input: String) -> Self::Parsed {
+        input.lines()
+    }
+
+    fn part_one(data: Self::Parsed) -> Self::PartOneOutput {}
+
+    fn part_two(data: Self::Parsed) -> Self::PartTwoOutput {}
 }
-
-fn part_one() {}
-
-fn part_two() {}

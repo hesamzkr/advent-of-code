@@ -2,8 +2,8 @@
 use std::env;
 use std::io;
 
+mod lib;
 mod solutions;
-mod utils;
 
 fn main() {
     let sysargs: Vec<String> = env::args().collect();
@@ -11,10 +11,10 @@ fn main() {
     let day_str = match sysargs.get(1) {
         Some(x) => x.to_string(),
         None => {
-            let mut day_str = String::new();
+            let mut buffer = String::new();
             println!("Enter the question number:");
-            io::stdin().read_line(&mut day_str);
-            day_str.trim().to_string()
+            io::stdin().read_line(&mut buffer);
+            buffer.trim().to_string()
         }
     };
 
@@ -22,7 +22,8 @@ fn main() {
         Ok(day_num) => solutions::run(day_num),
         Err(_) => {
             if (day_str == "all") {
-                for day_num in 1..solutions::latest_solution() + 1 {
+                let latest_solution = 1;
+                for day_num in 1..latest_solution + 1 {
                     solutions::run(day_num);
                 }
             } else {
