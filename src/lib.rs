@@ -2,7 +2,7 @@ use std::fmt::Debug;
 
 #[macro_export]
 macro_rules! solve {
-    (struct $st:ident, $day:ident) => {{
+    ($st:ident, $day:ident) => {{
         use crate::lib::Solution;
         use std::fs;
         println!("\nDay {}", $day);
