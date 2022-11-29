@@ -1,8 +1,9 @@
 #![allow(warnings)]
 use std::env;
+use std::fs;
 use std::io;
 
-mod lib;
+mod common;
 mod solutions;
 
 fn main() {
@@ -13,7 +14,7 @@ fn main() {
         None => {
             let mut buffer = String::new();
             println!("Enter the question number:");
-            io::stdin().read_line(&mut buffer);
+            io::stdin().read_line(&mut buffer).unwrap();
             buffer.trim().to_string()
         }
     };
@@ -21,9 +22,13 @@ fn main() {
     match day_str.parse() {
         Ok(day_num) => solutions::run(day_num),
         Err(_) => {
-            if (day_str == "all") {
-                let latest_solution = 1;
-                for day_num in 1..latest_solution + 1 {
+            if day_str == "all" {
+                let dir = fs::read_dir("./src/solutions").unwrap();
+                let mut latest_solution = 0;
+                for _ in dir {
+                    latest_solution += 1;
+                }
+                for day_num in 1..latest_solution {
                     solutions::run(day_num);
                 }
             } else {

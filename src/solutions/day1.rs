@@ -1,4 +1,4 @@
-use crate::lib::Solution;
+use crate::common::Solution;
 
 pub struct Day1;
 
@@ -18,4 +18,8 @@ impl Solution for Day1 {
     fn part_two(data: Self::Parsed) -> Self::PartTwoOutput {
         5
     }
+}
+
+impl Day1 {
+    fn util(data: <Day1 as Solution>::Parsed) {}
 }
