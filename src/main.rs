@@ -24,10 +24,7 @@ fn main() {
         Err(_) => {
             if day_str == "all" {
                 let dir = fs::read_dir("./src/solutions").unwrap();
-                let mut latest_solution = 0;
-                for _ in dir {
-                    latest_solution += 1;
-                }
+                let latest_solution = dir.fold(0, |i, _| i + 1);
                 for day_num in 1..latest_solution {
                     solutions::run(day_num);
                 }
