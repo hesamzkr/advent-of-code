@@ -10,11 +10,11 @@ macro_rules! solve {
         println!("\n{}", day_title);
         match fs::read_to_string(format!("inputs/input_{day}.txt")) {
             Ok(input_str) => {
-                let input = $st::parse(input_str);
+                let mut input = $st::parse(input_str);
 
-                println!("Part One: {:?}", $st::part_one(input.clone()));
+                println!("Part One: {:?}", $st::part_one(&mut input));
 
-                println!("Part Two: {:?}", $st::part_two(input.clone()));
+                println!("Part Two: {:?}", $st::part_two(&mut input));
 
                 println!("{}", "-".repeat(day_title.len()));
             }
@@ -29,6 +29,6 @@ pub trait Solution {
     type PartTwoOutput: Debug;
 
     fn parse(input: String) -> Self::Parsed;
-    fn part_one(data: Self::Parsed) -> Self::PartOneOutput;
-    fn part_two(data: Self::Parsed) -> Self::PartTwoOutput;
+    fn part_one(data: &mut Self::Parsed) -> Self::PartOneOutput;
+    fn part_two(data: &mut Self::Parsed) -> Self::PartTwoOutput;
 }
