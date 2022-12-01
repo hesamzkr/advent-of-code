@@ -1,5 +1,7 @@
-# Advent Of Code 2022
+# Advent of Code 2022
 
-Run with `cargo run [day number]` (eg. `cargo run 5`) or just `cargo run`.
+Run a specific day with `cargo run [day number]` (eg. `cargo run 5`).
 
-If `day number` is "all" (ie. `cargo run all`), it will run all the solved solutions for every day, one after another.
+Run all solutions so far with `cargo run all`.
+
+Run with just `cargo run` to read day number from stdin.

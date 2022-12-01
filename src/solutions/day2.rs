@@ -1,8 +1,8 @@
 use crate::common::Solution;
 
-pub struct DayX;
+pub struct Day2;
 
-impl Solution for DayX {
+impl Solution for Day2 {
     type Parsed = Vec<String>;
     type PartOneOutput = u64;
     type PartTwoOutput = u64;
@@ -20,6 +20,6 @@ impl Solution for DayX {
     }
 }
 
-impl DayX {
-    fn util(data: <DayX as Solution>::Parsed) {}
+impl Day2 {
+    fn util(data: <Day2 as Solution>::Parsed) {}
 }

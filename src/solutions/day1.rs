@@ -11,11 +11,7 @@ impl Solution for Day1 {
         // input file line endings must be "LF" instead of "CRLF"
         input
             .split("\n\n")
-            .map(|elf| {
-                elf.lines()
-                    .map(|line| line.parse::<u32>().unwrap())
-                    .sum::<u32>()
-            })
+            .map(|elf| elf.lines().map(|line| line.parse::<u32>().unwrap()).sum())
             .collect()
     }
 
