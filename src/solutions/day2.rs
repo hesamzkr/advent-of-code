@@ -62,17 +62,32 @@ impl Solution for Day2 {
             let (their_move, outcome) = (&round[0], &round[1]);
 
             let (your_move, outcome_score) = match (their_move, outcome) {
-                (Shape::Rock, Shape::Rock) => (Shape::Scissors, 0),
-                (Shape::Paper, Shape::Rock) => (Shape::Rock, 0),
-                (Shape::Scissors, Shape::Rock) => (Shape::Paper, 0),
+                (_, Shape::Rock) => (
+                    match their_move {
+                        Shape::Rock => Shape::Scissors,
+                        Shape::Paper => Shape::Rock,
+                        Shape::Scissors => Shape::Paper,
+                    },
+                    0,
+                ),
 
-                (Shape::Rock, Shape::Paper) => (Shape::Rock, 3),
-                (Shape::Paper, Shape::Paper) => (Shape::Paper, 3),
-                (Shape::Scissors, Shape::Paper) => (Shape::Scissors, 3),
+                (_, Shape::Paper) => (
+                    match their_move {
+                        Shape::Rock => Shape::Rock,
+                        Shape::Paper => Shape::Paper,
+                        Shape::Scissors => Shape::Scissors,
+                    },
+                    3,
+                ),
 
-                (Shape::Rock, Shape::Scissors) => (Shape::Paper, 6),
-                (Shape::Paper, Shape::Scissors) => (Shape::Scissors, 6),
-                (Shape::Scissors, Shape::Scissors) => (Shape::Rock, 6),
+                (_, Shape::Scissors) => (
+                    match their_move {
+                        Shape::Rock => Shape::Paper,
+                        Shape::Paper => Shape::Scissors,
+                        Shape::Scissors => Shape::Rock,
+                    },
+                    6,
+                ),
             };
 
             total += match your_move {
