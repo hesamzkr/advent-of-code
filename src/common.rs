@@ -24,7 +24,7 @@ macro_rules! solve {
 }
 
 pub trait Solution {
-    type Parsed: Clone;
+    type Parsed;
     type PartOneOutput: Debug;
     type PartTwoOutput: Debug;
 
