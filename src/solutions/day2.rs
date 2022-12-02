@@ -92,11 +92,7 @@ impl Solution for Day2 {
                     Move::Paper => Move::Scissors,
                     Move::Scissors => Move::Rock,
                 },
-                Outcome::Draw => match their_move {
-                    Move::Rock => Move::Rock,
-                    Move::Paper => Move::Paper,
-                    Move::Scissors => Move::Scissors,
-                },
+                Outcome::Draw => their_move,
                 Outcome::Loss => match their_move {
                     Move::Rock => Move::Scissors,
                     Move::Paper => Move::Rock,
@@ -106,7 +102,6 @@ impl Solution for Day2 {
 
             score += outcome as u32;
         }
-
         score
     }
 }
