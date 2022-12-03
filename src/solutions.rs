@@ -52,7 +52,6 @@ use day4::Day4;
 // use day25::Day25;
 
 pub fn run(day: u16) {
-    let time = std::time::Instant::now();
     match day {
         1 => solve!(Day1, day),
         2 => solve!(Day2, day),
@@ -81,6 +80,4 @@ pub fn run(day: u16) {
         // 25 => solve!(Day25, day),
         _ => println!("Invalid day number"),
     };
-
-    println!("Time taken: {:.2?}", std::time::Instant::now() - time);
 }

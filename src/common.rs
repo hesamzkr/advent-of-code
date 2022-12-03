@@ -10,6 +10,7 @@ macro_rules! solve {
         println!("\n{}", day_title);
         match fs::read_to_string(format!("inputs/input_{day}.txt")) {
             Ok(input_str) => {
+                let time = std::time::Instant::now();
                 let mut input = $st::parse(input_str);
 
                 println!("Part One: {:?}", $st::part_one(&mut input));
@@ -17,6 +18,7 @@ macro_rules! solve {
                 println!("Part Two: {:?}", $st::part_two(&mut input));
 
                 println!("{}", "-".repeat(day_title.len()));
+                println!("Time taken: {:.2?}", std::time::Instant::now() - time);
             }
             Err(_) => println!("inputs/input_{day}.txt doesn't exist or is unreadable"),
         };
