@@ -2,7 +2,7 @@ mod day1;
 mod day2;
 mod day3;
 mod day4;
-// mod day5;
+mod day5;
 // mod day6;
 // mod day7;
 // mod day8;
@@ -29,7 +29,7 @@ use day1::Day1;
 use day2::Day2;
 use day3::Day3;
 use day4::Day4;
-// use day5::Day5;
+use day5::Day5;
 // use day6::Day6;
 // use day7::Day7;
 // use day8::Day8;
@@ -57,7 +57,7 @@ pub fn run(day: u16) {
         2 => solve!(Day2, day),
         3 => solve!(Day3, day),
         4 => solve!(Day4, day),
-        // 5 => solve!(Day5, day),
+        5 => solve!(Day5, day),
         // 6 => solve!(Day6, day),
         // 7 => solve!(Day7, day),
         // 8 => solve!(Day8, day),
