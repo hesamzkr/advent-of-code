@@ -19,7 +19,7 @@ impl Solution for Day1 {
         *data.into_iter().max().unwrap()
     }
 
-    fn part_two(mut data: &mut Self::Parsed) -> Self::PartTwoOutput {
+    fn part_two(data: &mut Self::Parsed) -> Self::PartTwoOutput {
         data.sort();
         data.reverse();
         data.iter().take(3).sum()

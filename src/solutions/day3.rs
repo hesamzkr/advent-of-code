@@ -17,8 +17,8 @@ impl Solution for Day3 {
         let mut sum = 0;
         for sack in data {
             let mid = sack.len() / 2;
-            let mut first: HashSet<char> = HashSet::from_iter(sack.chars().take(mid));
-            let mut second: HashSet<char> = HashSet::from_iter(sack.chars().skip(mid));
+            let first: HashSet<char> = HashSet::from_iter(sack.chars().take(mid));
+            let second: HashSet<char> = HashSet::from_iter(sack.chars().skip(mid));
 
             sum += first
                 .intersection(&second)
