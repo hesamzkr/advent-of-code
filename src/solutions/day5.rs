@@ -4,13 +4,18 @@ use crate::common::Solution;
 
 pub struct Day5;
 
+pub struct Instruction {
+    amount: usize,
+    from: usize,
+    to: usize,
+}
+
 impl Solution for Day5 {
-    type Parsed = (Vec<VecDeque<char>>, Vec<(usize, usize, usize)>);
+    type Parsed = (Vec<VecDeque<char>>, Vec<Instruction>);
     type PartOneOutput = String;
     type PartTwoOutput = String;
 
     fn parse(input: String) -> Self::Parsed {
-
         let mut crane:Vec<VecDeque<char>> = Vec::new();
 
         for i in 0..9 {
@@ -23,13 +28,17 @@ impl Solution for Day5 {
             }
         }
 
-        let instructions: Vec<(usize, usize, usize)> = input
+        let instructions = input
         .split("\n\n")
         .nth(2)
         .unwrap()
         .lines()
         .map(|x| {
-            (x.split_whitespace().nth(1).unwrap().parse().unwrap(), x.split_whitespace().nth(3).unwrap().parse().unwrap(), x.split_whitespace().nth(5).unwrap().parse().unwrap()) 
+            Instruction {
+                amount: x.split_whitespace().nth(1).unwrap().parse().unwrap(),
+                from: x.split_whitespace().nth(3).unwrap().parse().unwrap(),
+                to: x.split_whitespace().nth(5).unwrap().parse().unwrap(),
+            }
         }).collect();
         
 
@@ -41,9 +50,9 @@ impl Solution for Day5 {
         let mut crane = data.0.clone();
 
         for instruction in &data.1 {
-            for i in 0..instruction.0 {
-                if let Some(x) = crane[instruction.1 - 1].pop_back() {
-                    crane[instruction.2 - 1].push_back(x);
+            for i in 0..instruction.amount {
+                if let Some(x) = crane[instruction.from - 1].pop_back() {
+                    crane[instruction.to - 1].push_back(x);
                 }
             }
         }
@@ -61,15 +70,13 @@ impl Solution for Day5 {
 
         for instruction in &data.1 {
             let mut temp: VecDeque<char> = VecDeque::new();
-            for i in 0..instruction.0 {
-
-                if let Some(x) = crane[instruction.1 - 1].pop_back() {
+            for i in 0..instruction.amount {
+                if let Some(x) = crane[instruction.from - 1].pop_back() {
                     temp.push_front(x);
-                    // crane[instruction.2 - 1].push_back(x);
                 }
             }
             for i in temp {
-                crane[instruction.2 - 1].push_back(i);
+                crane[instruction.to - 1].push_back(i);
             }
         }
 
