@@ -16,11 +16,12 @@ impl Solution for Day5 {
     type PartTwoOutput = String;
 
     fn parse(input: String) -> Self::Parsed {
-        let mut crane:Vec<VecDeque<char>> = Vec::new();
+        let input: Vec<&str> = input.split("\n\n").collect();
+        let mut crane: Vec<VecDeque<char>> = Vec::new();
 
         for i in 0..9 {
             crane.push(VecDeque::new());
-            for j in input.split("\n\n").nth(0).unwrap().lines() {
+            for j in input[0].lines() {
                 let x = j.chars().nth(1 + i * 4).unwrap();
                 if x.is_alphabetic() {
                     crane[i].push_front(x);
@@ -28,20 +29,15 @@ impl Solution for Day5 {
             }
         }
 
-        let instructions = input
-        .split("\n\n")
-        .nth(2)
-        .unwrap()
-        .lines()
-        .map(|x| {
-            Instruction {
-                amount: x.split_whitespace().nth(1).unwrap().parse().unwrap(),
-                from: x.split_whitespace().nth(3).unwrap().parse().unwrap(),
-                to: x.split_whitespace().nth(5).unwrap().parse().unwrap(),
-            }
-        }).collect();
-        
-
+        let instructions = input[2]
+            .lines()
+            .map(|x| x.split_whitespace().collect::<Vec<&str>>())
+            .map(|x| Instruction {
+                amount: x[1].parse().unwrap(),
+                from: x[3].parse().unwrap(),
+                to: x[5].parse().unwrap(),
+            })
+            .collect();
 
         (crane, instructions)
     }
