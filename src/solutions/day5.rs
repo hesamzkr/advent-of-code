@@ -55,7 +55,7 @@ impl Solution for Day5 {
 
         crane.iter().fold(String::new(), |mut acc, i| {
             if let Some(x) = i.get(i.len() - 1) {
-                acc.push(*x)
+                acc.push(*x);
             }
             acc
         })
@@ -78,7 +78,7 @@ impl Solution for Day5 {
 
         crane.iter().fold(String::new(), |mut acc, i| {
             if let Some(x) = i.get(i.len() - 1) {
-                acc.push(*x)
+                acc.push(*x);
             }
             acc
         })
