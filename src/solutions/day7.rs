@@ -12,11 +12,11 @@ impl Solution for Day7 {
     }
 
     fn part_one(data: &mut Self::Parsed) -> Self::PartOneOutput {
-        todo!()
+        0
     }
 
     fn part_two(data: &mut Self::Parsed) -> Self::PartTwoOutput {
-        todo!()
+        0
     }
 }
 
