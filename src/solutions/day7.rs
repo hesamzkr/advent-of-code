@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::fmt::format;
 
 use crate::common::Solution;
 
@@ -24,7 +24,7 @@ impl Solution for Day7 {
     fn part_one(data: &mut Self::Parsed) -> Self::PartOneOutput {
         let mut system: Vec<Dir> = vec![Dir {
             name: "/".to_string(),
-            prev: "".to_string(),
+            prev: "/".to_string(),
             dirs: Vec::new(),
             files: Vec::new(),
         }];
@@ -39,15 +39,14 @@ impl Solution for Day7 {
                             system
                             .iter()
                             .position(|dir| dir.name == 
-                                system[current_dir].prev && dir.dirs.contains(&system[current_dir].name)).unwrap()
+                                system[current_dir].prev).unwrap()
                         },
-                        _ => {
-
+                        x => {
                             system
                             .iter()
                             .position(|dir| 
-                                dir.name == arg.to_string() && dir.prev == system[current_dir].name
-                            ).unwrap()
+                                dir.name == x.to_string() && dir.prev == system[current_dir].name
+                            ).expect(&format!("{x} {:?}", system[current_dir].name))
                         },
                     };
                 }
@@ -68,16 +67,18 @@ impl Solution for Day7 {
             }
         }
 
-        let mut total = 0;
+        let total = 70000000;
+        let needed = 30000000;
+        let used_space = Self::calc_dir_size(&system, &system[0]);
+        let mut all: Vec<u128> = vec![];
         for dir in &system {
-            // println!("name: {}, prev: {}, dirs: {:?}, files: {:?}", dir.name, dir.prev, dir.dirs, dir.files);
+            // println!("name: {}, prev: {}, dirs: {:?}\nfiles:{:?}", dir.name, dir.prev, dir.dirs, dir.files);
             let size = Self::calc_dir_size(&system, dir);
-            if size < 100000 {
-                total += size;
+            if total - used_space + size > needed {
+                all.push(size);
             }
         }
-
-        total
+        *all.iter().min().unwrap()
     }
 
     fn part_two(data: &mut Self::Parsed) -> Self::PartTwoOutput {
@@ -100,7 +101,6 @@ impl Day7 {
             size += Self::calc_dir_size(system, &system[i]);
         }
 
-        // println!("{}, {size}", dir.name);
         size
     }
 }
