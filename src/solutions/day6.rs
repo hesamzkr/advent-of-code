@@ -1,42 +1,37 @@
 use std::collections::HashSet;
 
-use crate::common::Solution;
+pub fn run(input: String) -> (usize, usize) {
+    let input: Vec<char> = input.chars().collect();
 
-pub struct Day6;
+    let part_one = part_one(&input);
+    let part_two = part_two(&input);
 
-impl Solution for Day6 {
-    type Parsed = Vec<char>;
-    type PartOneOutput = usize;
-    type PartTwoOutput = usize;
+    (part_one, part_two)
+}
 
-    fn parse(input: String) -> Self::Parsed {
-        input.chars().collect()
-    }
-
-    fn part_one(data: &mut Self::Parsed) -> Self::PartOneOutput {
-        for i in 0..(data.len() - 3) {
-            let mut set: HashSet<char> = HashSet::new();
-            set.insert(data[i]);
-            set.insert(data[i + 1]);
-            set.insert(data[i + 2]);
-            set.insert(data[i + 3]);
-            if set.len() == 4 {
-                return i + 4;
-            }
+fn part_one(input: &Vec<char>) -> usize {
+    for i in 0..(input.len() - 3) {
+        let mut set: HashSet<char> = HashSet::new();
+        set.insert(input[i]);
+        set.insert(input[i + 1]);
+        set.insert(input[i + 2]);
+        set.insert(input[i + 3]);
+        if set.len() == 4 {
+            return i + 4;
         }
-        0
     }
+    0
+}
 
-    fn part_two(data: &mut Self::Parsed) -> Self::PartTwoOutput {
-        for i in 0..(data.len() - 13) {
-            let mut set: HashSet<char> = HashSet::new();
-            for j in 0..14 {
-                set.insert(data[i + j]);
-            }
-            if set.len() == 14 {
-                return i + 14;
-            }
+fn part_two(input: &Vec<char>) -> usize {
+    for i in 0..(input.len() - 13) {
+        let mut set: HashSet<char> = HashSet::new();
+        for j in 0..14 {
+            set.insert(input[i + j]);
         }
-        0
+        if set.len() == 14 {
+            return i + 14;
+        }
     }
+    0
 }

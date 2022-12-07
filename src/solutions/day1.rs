@@ -1,27 +1,21 @@
-use crate::common::Solution;
+pub fn run(input: String) -> (u32, u32) {
+    let mut input: Vec<u32> = input
+        .split("\n\n")
+        .map(|elf| elf.lines().map(|line| line.parse::<u32>().unwrap()).sum())
+        .collect();
 
-pub struct Day1;
+    let part_one = part_one(&input);
+    let part_two = part_two(&mut input);
 
-impl Solution for Day1 {
-    type Parsed = Vec<u32>;
-    type PartOneOutput = u32;
-    type PartTwoOutput = u32;
+    (part_one, part_two)
+}
 
-    fn parse(input: String) -> Self::Parsed {
-        // input file line endings must be "LF" instead of "CRLF"
-        input
-            .split("\n\n")
-            .map(|elf| elf.lines().map(|line| line.parse::<u32>().unwrap()).sum())
-            .collect()
-    }
+fn part_one(input: &Vec<u32>) -> u32 {
+    *input.iter().max().unwrap()
+}
 
-    fn part_one(data: &mut Self::Parsed) -> Self::PartOneOutput {
-        *data.into_iter().max().unwrap()
-    }
-
-    fn part_two(data: &mut Self::Parsed) -> Self::PartTwoOutput {
-        data.sort();
-        data.reverse();
-        data.iter().take(3).sum()
-    }
+fn part_two(input: &mut Vec<u32>) -> u32 {
+    input.sort();
+    input.reverse();
+    input.iter().take(3).sum()
 }
