@@ -14,7 +14,7 @@ impl Solution for Day6 {
     }
 
     fn part_one(data: &mut Self::Parsed) -> Self::PartOneOutput {
-        for i in 0..data.len() {
+        for i in 0..(data.len() - 3) {
             let mut set: HashSet<char> = HashSet::new();
             set.insert(data[i]);
             set.insert(data[i + 1]);
@@ -28,7 +28,7 @@ impl Solution for Day6 {
     }
 
     fn part_two(data: &mut Self::Parsed) -> Self::PartTwoOutput {
-        for i in 0..data.len() {
+        for i in 0..(data.len() - 13) {
             let mut set: HashSet<char> = HashSet::new();
             for j in 0..14 {
                 set.insert(data[i + j]);

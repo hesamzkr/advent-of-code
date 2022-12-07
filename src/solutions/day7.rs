@@ -1,106 +1,102 @@
-use std::fmt::format;
+use std::collections::HashMap;
 
 use crate::common::Solution;
 
 pub struct Day7;
 
-pub struct Dir {
-    name: String,
-    prev: String,
-    dirs: Vec<String>,
-    files: Vec<(u128, String)>
-} 
-
 impl Solution for Day7 {
     type Parsed = Vec<String>;
     type PartOneOutput = u128;
     type PartTwoOutput = u128;
-
     fn parse(input: String) -> Self::Parsed {
         input.lines().map(|x| x.to_string()).collect()
-
     }
 
     fn part_one(data: &mut Self::Parsed) -> Self::PartOneOutput {
-        let mut system: Vec<Dir> = vec![Dir {
-            name: "/".to_string(),
-            prev: "/".to_string(),
-            dirs: Vec::new(),
-            files: Vec::new(),
-        }];
-        let mut current_dir: usize = 0;
+        let mut system: HashMap<String, u128> = HashMap::from([("".to_string(), 0)]);
+        let mut path: Vec<&str> = Vec::new();
         for line in data {
             if line.starts_with("$") {
                 if line.chars().nth(2) == Some('c') {
-                    let arg = line.split_whitespace().nth(2).unwrap();
-                    current_dir = match arg {
-                        "/" => 0,
-                        ".." => {
-                            system
-                            .iter()
-                            .position(|dir| dir.name == 
-                                system[current_dir].prev).unwrap()
-                        },
-                        x => {
-                            system
-                            .iter()
-                            .position(|dir| 
-                                dir.name == x.to_string() && dir.prev == system[current_dir].name
-                            ).expect(&format!("{x} {:?}", system[current_dir].name))
-                        },
-                    };
+                    let dir = line.split_whitespace().nth(2).unwrap();
+                    if dir == "/" {
+                        path = Vec::new();
+                    } else if dir == ".." {
+                        path.pop();
+                    } else {
+                        path.push(dir);
+                    }
                 }
             } else {
                 let split: Vec<&str> = line.split_whitespace().collect();
                 if split[0] == "dir" {
-                    system[current_dir].dirs.push(split[1].to_string());
-
-                    system.push(Dir {
-                        name: split[1].to_string(),
-                        prev: system[current_dir].name.to_owned(),
-                        dirs: Vec::new(),
-                        files: Vec::new(),
-                    });
+                    path.push(split[1]);
+                    system.insert(path.join("/"), 0);
+                    path.pop();
                 } else {
-                    system[current_dir].files.push((split[0].parse().unwrap(), split[1].to_string()));
+                    let file_size = split[0].parse::<u128>().unwrap();
+                    let mut temp = path.clone();
+                    while temp.len() > 0 {
+                        *system.get_mut(&temp.join("/")).unwrap() += file_size;
+                        temp.pop();
+                    }
+                    *system.get_mut(&temp.join("/")).unwrap() += file_size;
+                    temp.pop();
                 }
             }
         }
 
-        let total = 70000000;
-        let needed = 30000000;
-        let used_space = Self::calc_dir_size(&system, &system[0]);
-        let mut all: Vec<u128> = vec![];
-        for dir in &system {
-            // println!("name: {}, prev: {}, dirs: {:?}\nfiles:{:?}", dir.name, dir.prev, dir.dirs, dir.files);
-            let size = Self::calc_dir_size(&system, dir);
-            if total - used_space + size > needed {
-                all.push(size);
+        let mut total = 0;
+        for size in system.values() {
+            if size < &100000 {
+                total += size;
             }
         }
-        *all.iter().min().unwrap()
+
+        total
     }
 
     fn part_two(data: &mut Self::Parsed) -> Self::PartTwoOutput {
-        0
-    }
-}
-
-impl Day7 {
-    fn calc_dir_size(system: &Vec<Dir>, dir: &Dir) -> u128 {
-        let mut size = 0;
-
-        for (file_size, name) in &dir.files {
-            // println!("{}: name:{}, size:{}", dir.name, name, file_size);
-            size += file_size;
+        let mut system: HashMap<String, u128> = HashMap::from([("".to_string(), 0)]);
+        let mut path: Vec<&str> = Vec::new();
+        for line in data {
+            if line.starts_with("$") {
+                if line.chars().nth(2) == Some('c') {
+                    let dir = line.split_whitespace().nth(2).unwrap();
+                    if dir == "/" {
+                        path = Vec::new();
+                    } else if dir == ".." {
+                        path.pop();
+                    } else {
+                        path.push(dir);
+                    }
+                }
+            } else {
+                let split: Vec<&str> = line.split_whitespace().collect();
+                if split[0] == "dir" {
+                    path.push(split[1]);
+                    system.insert(path.join("/"), 0);
+                    path.pop();
+                } else {
+                    let file_size = split[0].parse::<u128>().unwrap();
+                    let mut temp = path.clone();
+                    while temp.len() > 0 {
+                        *system.get_mut(&temp.join("/")).unwrap() += file_size;
+                        temp.pop();
+                    }
+                    *system.get_mut(&temp.join("/")).unwrap() += file_size;
+                    temp.pop();
+                }
+            }
         }
 
-        for sub_dir in &dir.dirs {
-            let i = system.iter().position(|x| x.name == 
-                                *sub_dir && x.prev == dir.name).unwrap();
-            size += Self::calc_dir_size(system, &system[i]);
-        }
-
-        size
+        let total: u128 = 70000000;
+        let needed: u128 = 30000000;
+        let used_space = system.get("").unwrap();
+        *system
+            .values()
+            .filter(|size| total - used_space + **size > needed)
+            .min()
+            .unwrap()
     }
 }
