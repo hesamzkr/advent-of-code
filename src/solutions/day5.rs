@@ -38,7 +38,7 @@ pub fn run(input: String) -> (String, String) {
 
 fn part_one(mut crane: Vec<VecDeque<char>>, instructions: &Vec<Instruction>) -> String {
     for instruction in instructions {
-        for i in 0..instruction.amount {
+        for _ in 0..instruction.amount {
             if let Some(x) = crane[instruction.from - 1].pop_back() {
                 crane[instruction.to - 1].push_back(x);
             }
@@ -56,7 +56,7 @@ fn part_one(mut crane: Vec<VecDeque<char>>, instructions: &Vec<Instruction>) -> 
 fn part_two(mut crane: Vec<VecDeque<char>>, instructions: &Vec<Instruction>) -> String {
     for instruction in instructions {
         let mut temp: VecDeque<char> = VecDeque::new();
-        for i in 0..instruction.amount {
+        for _ in 0..instruction.amount {
             if let Some(x) = crane[instruction.from - 1].pop_back() {
                 temp.push_front(x);
             }

@@ -1,8 +1,8 @@
 #[macro_export]
 macro_rules! solve {
-    ($md:ident, $day:ident) => {{
+    ($md:ident) => {{
         use std::fs;
-        let day = $day.to_string();
+        let day = &stringify!($md)[3..];
         let day_title = format!("--- Day {day} ---");
         println!("\n{}", day_title);
         match fs::read_to_string(format!("inputs/input_{day}.txt")) {
