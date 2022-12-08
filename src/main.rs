@@ -1,7 +1,5 @@
 #![allow(warnings)]
-use std::env;
-use std::fs;
-use std::io;
+use std::{env, fs, io};
 
 mod common;
 mod solutions;
