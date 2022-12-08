@@ -4,63 +4,91 @@ pub fn run(input: String) -> (u32, u32) {
         .map(|x| x.chars().map(|y| y.to_digit(10).unwrap()).collect())
         .collect();
 
-    let part_one = part_one(&input);
-    let part_two = part_two(&input);
+    let answer_one = part_one(&input);
+    let answer_two = part_two(&input);
 
-    (part_one, part_two)
+    (answer_one, answer_two)
 }
 
 fn part_one(input: &Vec<Vec<u32>>) -> u32 {
-    let mut count = 0;
-    for i in 0..input.len() {
-        for j in 0..input[0].len() {
-            let tree = input[i][j];
-            let mut is_visible = true;
-            for x_pos in j + 1..input[0].len() {
-                if tree <= input[i][x_pos] {
-                    is_visible = false;
-                }
-            }
-            if is_visible {
-                count += 1;
-                continue;
-            }
-            is_visible = true;
-            for x_neg in 0..j {
-                if tree <= input[i][x_neg] {
-                    is_visible = false;
-                }
-            }
-            if is_visible {
-                count += 1;
-                continue;
-            }
-            is_visible = true;
-            for y_pos in 0..i {
-                if tree <= input[y_pos][j] {
-                    is_visible = false;
-                }
-            }
-            if is_visible {
-                count += 1;
-                continue;
-            }
-            is_visible = true;
-            for y_neg in i + 1..input.len() {
-                if tree <= input[y_neg][j] {
-                    is_visible = false;
-                }
-            }
-            if is_visible {
-                count += 1;
-                continue;
+    let mut visible_trees = 0;
+    for row in 0..input.len() {
+        for col in 0..input[0].len() {
+            let tree = input[row][col];
+            let col_cells: Vec<u32> = input.iter().map(|x| x[col]).collect();
+
+            let trees_left = input[row].iter().take(col);
+            let trees_right = input[row].iter().skip(col + 1);
+            let trees_up = col_cells.iter().take(row);
+            let trees_down = col_cells.iter().skip(row + 1);
+
+            if trees_left.filter(|x| x >= &&tree).count() == 0
+                || trees_right.filter(|x| x >= &&tree).count() == 0
+                || trees_up.filter(|x| x >= &&tree).count() == 0
+                || trees_down.filter(|x| x >= &&tree).count() == 0
+            {
+                visible_trees += 1;
             }
         }
     }
 
-    count
+    visible_trees
 }
 
 fn part_two(input: &Vec<Vec<u32>>) -> u32 {
-    0
+    let mut highest = 0;
+    for row in 0..input.len() {
+        for col in 0..input[0].len() {
+            let tree = input[row][col];
+            let mut scenic_score = 1;
+            let col_cells = input.iter().map(|x| x[col]);
+
+            let trees_left = input[row].iter().take(col).rev();
+            let trees_right = input[row].iter().skip(col + 1);
+            let trees_up = col_cells.clone().take(row).rev();
+            let trees_down = col_cells.clone().skip(row + 1);
+
+            let mut count = 0;
+            for x in trees_left {
+                count += 1;
+                if &tree <= x {
+                    break;
+                }
+            }
+            scenic_score *= count;
+
+            count = 0;
+            for x in trees_right {
+                count += 1;
+                if &tree <= x {
+                    break;
+                }
+            }
+            scenic_score *= count;
+
+            count = 0;
+            for x in trees_up {
+                count += 1;
+                if tree <= x {
+                    break;
+                }
+            }
+            scenic_score *= count;
+
+            count = 0;
+            for x in trees_down {
+                count += 1;
+                if tree <= x {
+                    break;
+                }
+            }
+            scenic_score *= count;
+
+            if scenic_score > highest {
+                highest = scenic_score;
+            }
+        }
+    }
+
+    highest
 }

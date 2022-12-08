@@ -30,10 +30,10 @@ pub fn run(input: String) -> (String, String) {
         })
         .collect();
 
-    let part_one = part_one(crane.clone(), &instructions);
-    let part_two = part_two(crane.clone(), &instructions);
+    let answer_one = part_one(crane.clone(), &instructions);
+    let answer_two = part_two(crane.clone(), &instructions);
 
-    (part_one, part_two)
+    (answer_one, answer_two)
 }
 
 fn part_one(mut crane: Vec<VecDeque<char>>, instructions: &Vec<Instruction>) -> String {

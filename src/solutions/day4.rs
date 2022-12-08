@@ -10,10 +10,10 @@ pub fn run(input: String) -> (u32, u32) {
         })
         .collect();
 
-    let part_one = part_one(&input);
-    let part_two = part_two(&input);
+    let answer_one = part_one(&input);
+    let answer_two = part_two(&input);
 
-    (part_one, part_two)
+    (answer_one, answer_two)
 }
 
 fn part_one(input: &Vec<Vec<u32>>) -> u32 {

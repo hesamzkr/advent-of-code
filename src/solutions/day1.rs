@@ -4,10 +4,10 @@ pub fn run(input: String) -> (u32, u32) {
         .map(|elf| elf.lines().map(|line| line.parse::<u32>().unwrap()).sum())
         .collect();
 
-    let part_one = part_one(&input);
-    let part_two = part_two(&mut input);
+    let answer_one = part_one(&input);
+    let answer_two = part_two(&mut input);
 
-    (part_one, part_two)
+    (answer_one, answer_two)
 }
 
 fn part_one(input: &Vec<u32>) -> u32 {

@@ -3,10 +3,10 @@ use std::collections::HashMap;
 pub fn run(input: String) -> (u64, u64) {
     let input: Vec<&str> = input.lines().collect();
 
-    let (part_one, system) = part_one(&input);
-    let part_two = part_two(&system);
+    let (answer_one, system) = part_one(&input);
+    let answer_two = part_two(&system);
 
-    (part_one, part_two)
+    (answer_one, answer_two)
 }
 
 fn part_one(input: &Vec<&str>) -> (u64, HashMap<String, u64>) {

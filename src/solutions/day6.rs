@@ -3,10 +3,10 @@ use std::collections::HashSet;
 pub fn run(input: String) -> (usize, usize) {
     let input: Vec<char> = input.chars().collect();
 
-    let part_one = part_one(&input);
-    let part_two = part_two(&input);
+    let answer_one = part_one(&input);
+    let answer_two = part_two(&input);
 
-    (part_one, part_two)
+    (answer_one, answer_two)
 }
 
 fn part_one(input: &Vec<char>) -> usize {
