@@ -1,4 +1,5 @@
 mod day1;
+mod day10;
 mod day2;
 mod day3;
 mod day4;
@@ -7,7 +8,6 @@ mod day6;
 mod day7;
 mod day8;
 mod day9;
-// mod day10;
 // mod day11;
 // mod day12;
 // mod day13;
@@ -37,7 +37,7 @@ pub fn run(day: u16) {
         7 => solve!(day7),
         8 => solve!(day8),
         9 => solve!(day9),
-        // 10 => solve!(day10),
+        10 => solve!(day10),
         // 11 => solve!(day11),
         // 12 => solve!(day12),
         // 13 => solve!(day13),
