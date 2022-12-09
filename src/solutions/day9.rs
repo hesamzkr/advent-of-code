@@ -47,7 +47,7 @@ fn part_one(input: &Vec<Motion>) -> usize {
                 x: head.x - tail.x,
                 y: head.y - tail.y,
             };
-            if !(diff.x.abs() <= 1 && diff.y.abs() <= 1) {
+            if diff.x.abs() > 1 || diff.y.abs() > 1 {
                 if diff.x == 0 {
                     tail.y += diff.y / diff.y.abs();
                 } else if diff.y == 0 {
@@ -87,7 +87,7 @@ fn part_two(input: &Vec<Motion>) -> usize {
                     x: head.x - tail.x,
                     y: head.y - tail.y,
                 };
-                if !(diff.x.abs() <= 1 && diff.y.abs() <= 1) {
+                if diff.x.abs() > 1 || diff.y.abs() > 1 {
                     if diff.x == 0 {
                         rope[i + 1].y += diff.y / diff.y.abs();
                     } else if diff.y == 0 {
