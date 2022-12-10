@@ -16,7 +16,7 @@ pub fn run(input: String) -> (u32, u32) {
     (answer_one, answer_two)
 }
 
-fn part_one(input: &Vec<Vec<u32>>) -> u32 {
+fn part_one(input: &[Vec<u32>]) -> u32 {
     input.iter().fold(0, |acc, pair| {
         let first: HashSet<u32> = HashSet::from_iter(pair[0]..=pair[1]);
         let second: HashSet<u32> = HashSet::from_iter(pair[2]..=pair[3]);
@@ -30,7 +30,7 @@ fn part_one(input: &Vec<Vec<u32>>) -> u32 {
     })
 }
 
-fn part_two(input: &Vec<Vec<u32>>) -> u32 {
+fn part_two(input: &[Vec<u32>]) -> u32 {
     input.iter().fold(0, |acc, pair| {
         let first: HashSet<u32> = HashSet::from_iter(pair[0]..=pair[1]);
         let second: HashSet<u32> = HashSet::from_iter(pair[2]..=pair[3]);

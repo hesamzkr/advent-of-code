@@ -9,7 +9,7 @@ pub fn run(input: String) -> (u32, u32) {
     (answer_one, answer_two)
 }
 
-fn part_one(input: &Vec<&str>) -> u32 {
+fn part_one(input: &[&str]) -> u32 {
     let mut sum = 0;
     for sack in input {
         let mid = sack.len() / 2;
@@ -23,7 +23,7 @@ fn part_one(input: &Vec<&str>) -> u32 {
     sum
 }
 
-fn part_two(input: &Vec<&str>) -> u32 {
+fn part_two(input: &[&str]) -> u32 {
     let mut sum = 0;
     for i in (0..=input.len() - 3).step_by(3) {
         let r1: HashSet<char> = HashSet::from_iter(input[i].chars());
@@ -32,7 +32,7 @@ fn part_two(input: &Vec<&str>) -> u32 {
 
         sum += r1
             .intersection(&r2)
-            .map(|x| *x)
+            .copied()
             .collect::<HashSet<char>>()
             .intersection(&r3)
             .fold(0, |acc, c| acc + char_to_num(*c));

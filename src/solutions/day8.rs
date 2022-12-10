@@ -10,7 +10,7 @@ pub fn run(input: String) -> (u32, u32) {
     (answer_one, answer_two)
 }
 
-fn part_one(input: &Vec<Vec<u32>>) -> u32 {
+fn part_one(input: &[Vec<u32>]) -> u32 {
     let mut visible_trees = 0;
     for row in 0..input.len() {
         for col in 0..input[0].len() {
@@ -35,7 +35,7 @@ fn part_one(input: &Vec<Vec<u32>>) -> u32 {
     visible_trees
 }
 
-fn part_two(input: &Vec<Vec<u32>>) -> u32 {
+fn part_two(input: &[Vec<u32>]) -> u32 {
     let mut highest = 0;
     for row in 0..input.len() {
         for col in 0..input[0].len() {

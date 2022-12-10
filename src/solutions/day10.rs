@@ -9,7 +9,7 @@ pub fn run(input: String) -> (i32, String) {
     (answer_one, answer_two)
 }
 
-fn part_one(input: &Vec<&str>) -> i32 {
+fn part_one(input: &[&str]) -> i32 {
     let mut cycle = 0;
     let mut x = 1;
     let mut sum = 0;
@@ -35,7 +35,7 @@ fn part_one(input: &Vec<&str>) -> i32 {
     sum
 }
 
-fn part_two(input: &Vec<&str>) -> String {
+fn part_two(input: &[&str]) -> String {
     let mut grid: Vec<String> = vec![String::new()];
     let mut grid_index = 0;
     let mut cycle = 0;

@@ -20,7 +20,7 @@ pub fn run(input: String) -> (u32, u32) {
     (answer_one, answer_two)
 }
 
-fn part_one(input: &Vec<&str>) -> u32 {
+fn part_one(input: &[&str]) -> u32 {
     let mut score = 0;
 
     let input: Vec<Vec<Move>> = input
@@ -57,13 +57,13 @@ fn part_one(input: &Vec<&str>) -> u32 {
     score
 }
 
-fn part_two(input: &Vec<&str>) -> u32 {
+fn part_two(input: &[&str]) -> u32 {
     let mut score = 0;
 
     let input: Vec<(Move, Outcome)> = input
         .iter()
         .map(|game| {
-            let their_move = match game.chars().nth(0).unwrap() {
+            let their_move = match game.chars().next().unwrap() {
                 'A' => Move::Rock,
                 'B' => Move::Paper,
                 'C' => Move::Scissors,

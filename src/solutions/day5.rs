@@ -46,7 +46,7 @@ fn part_one(mut crane: Vec<VecDeque<char>>, instructions: &Vec<Instruction>) -> 
     }
 
     crane.iter().fold(String::new(), |mut acc, i| {
-        if let Some(x) = i.get(i.len() - 1) {
+        if let Some(x) = i.back() {
             acc.push(*x);
         }
         acc
@@ -67,7 +67,7 @@ fn part_two(mut crane: Vec<VecDeque<char>>, instructions: &Vec<Instruction>) -> 
     }
 
     crane.iter().fold(String::new(), |mut acc, i| {
-        if let Some(x) = i.get(i.len() - 1) {
+        if let Some(x) = i.back() {
             acc.push(*x);
         }
         acc

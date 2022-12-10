@@ -9,7 +9,7 @@ pub fn run(input: String) -> (usize, usize) {
     (answer_one, answer_two)
 }
 
-fn part_one(input: &Vec<char>) -> usize {
+fn part_one(input: &[char]) -> usize {
     for i in 0..(input.len() - 3) {
         let mut set: HashSet<char> = HashSet::new();
         set.insert(input[i]);
@@ -23,7 +23,7 @@ fn part_one(input: &Vec<char>) -> usize {
     0
 }
 
-fn part_two(input: &Vec<char>) -> usize {
+fn part_two(input: &[char]) -> usize {
     for i in 0..(input.len() - 13) {
         let mut set: HashSet<char> = HashSet::new();
         for j in 0..14 {

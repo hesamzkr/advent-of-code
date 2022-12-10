@@ -7,10 +7,10 @@ pub fn run(input: String) -> (u32, u32) {
     (answer_one, answer_two)
 }
 
-fn part_one(input: &Vec<&str>) -> u32 {
+fn part_one(input: &[&str]) -> u32 {
     0
 }
 
-fn part_two(input: &Vec<&str>) -> u32 {
+fn part_two(input: &[&str]) -> u32 {
     0
 }

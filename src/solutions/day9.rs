@@ -27,7 +27,7 @@ pub fn run(input: String) -> (usize, usize) {
     (answer_one, answer_two)
 }
 
-fn part_one(input: &Vec<Motion>) -> usize {
+fn part_one(input: &[Motion]) -> usize {
     let mut head = Point { x: 0, y: 0 };
     let mut tail = Point { x: 0, y: 0 };
     let mut visited_points: HashSet<Point> = HashSet::new();
@@ -58,14 +58,14 @@ fn part_one(input: &Vec<Motion>) -> usize {
                 }
             }
 
-            visited_points.insert(tail.clone());
+            visited_points.insert(tail);
         }
     }
 
     visited_points.len()
 }
 
-fn part_two(input: &Vec<Motion>) -> usize {
+fn part_two(input: &[Motion]) -> usize {
     let mut rope: Vec<Point> = (0..10).map(|_| Point { x: 0, y: 0 }).collect();
     let mut visited_points: HashSet<Point> = HashSet::new();
     for motion in input {

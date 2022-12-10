@@ -10,11 +10,11 @@ pub fn run(input: String) -> (u32, u32) {
     (answer_one, answer_two)
 }
 
-fn part_one(input: &Vec<u32>) -> u32 {
+fn part_one(input: &[u32]) -> u32 {
     *input.iter().max().unwrap()
 }
 
-fn part_two(input: &mut Vec<u32>) -> u32 {
+fn part_two(input: &mut [u32]) -> u32 {
     input.sort();
     input.reverse();
     input.iter().take(3).sum()

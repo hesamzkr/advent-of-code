@@ -9,11 +9,11 @@ pub fn run(input: String) -> (u64, u64) {
     (answer_one, answer_two)
 }
 
-fn part_one(input: &Vec<&str>) -> (u64, HashMap<String, u64>) {
+fn part_one(input: &[&str]) -> (u64, HashMap<String, u64>) {
     let mut system: HashMap<String, u64> = HashMap::from([("".to_string(), 0)]);
     let mut path: Vec<&str> = Vec::new();
     for line in input {
-        if line.starts_with("$") {
+        if line.starts_with('$') {
             if line.chars().nth(2) == Some('c') {
                 let dir = line.split_whitespace().nth(2).unwrap();
                 if dir == "/" {
@@ -33,7 +33,7 @@ fn part_one(input: &Vec<&str>) -> (u64, HashMap<String, u64>) {
             } else {
                 let file_size = split[0].parse::<u64>().unwrap();
                 let mut temp = path.clone();
-                while temp.len() > 0 {
+                while !temp.is_empty() {
                     *system.get_mut(&temp.join("/")).unwrap() += file_size;
                     temp.pop();
                 }
