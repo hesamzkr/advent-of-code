@@ -77,7 +77,7 @@ fn part_two(input: &Vec<Motion>) -> usize {
             _ => panic!("Invalid direction"),
         };
 
-        for x in 0..motion.steps {
+        for _ in 0..motion.steps {
             rope[0].x += dir.x;
             rope[0].y += dir.y;
             for i in 0..rope.len() - 1 {

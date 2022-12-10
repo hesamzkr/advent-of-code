@@ -10,9 +10,9 @@ macro_rules! solve {
                 let time = std::time::Instant::now();
                 let answers = $md::run(input_str);
 
-                println!("Part One: {:?}", answers.0);
+                println!("Part One: {}", answers.0);
 
-                println!("Part Two: {:?}", answers.1);
+                println!("Part Two: {}", answers.1);
 
                 println!("{}", "-".repeat(day_title.len()));
                 println!("Time taken: {:.2?}", std::time::Instant::now() - time);
