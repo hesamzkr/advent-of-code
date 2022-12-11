@@ -17,8 +17,8 @@ pub fn run(input: String) -> (u64, u64) {
                 .next()
                 .unwrap()
                 .replace("  Starting items: ", "")
-                .replace(" ", "")
-                .split(",")
+                .replace(' ', "")
+                .split(',')
                 .map(|x| x.parse::<u64>().unwrap())
                 .collect();
             let replaced = x.next().unwrap().replace("  Operation: new = old ", "");
@@ -47,17 +47,17 @@ pub fn run(input: String) -> (u64, u64) {
                 .unwrap();
 
             Monkey {
-                items: items,
-                operation: operation,
-                test: test,
-                if_true: if_true,
-                if_false: if_false,
+                items,
+                operation,
+                test,
+                if_true,
+                if_false,
             }
         })
         .collect();
 
     let answer_one = part_one(monkeys.clone());
-    let answer_two = part_two(monkeys.clone());
+    let answer_two = part_two(monkeys);
 
     (answer_one, answer_two)
 }
@@ -67,7 +67,7 @@ fn part_one(mut monkeys: Vec<Monkey>) -> u64 {
     for _ in 0..20 {
         for i in 0..monkeys.len() {
             let monkey = monkeys[i].clone();
-            while monkeys[i].items.len() > 0 {
+            while !monkeys[i].items.is_empty() {
                 let item = monkeys[i].items[0];
                 let operand = match monkey.operation.1.parse() {
                     Ok(x) => x,
@@ -104,7 +104,7 @@ fn part_two(mut monkeys: Vec<Monkey>) -> u64 {
     for _ in 0..10000 {
         for i in 0..monkeys.len() {
             let monkey = monkeys[i].clone();
-            while monkeys[i].items.len() > 0 {
+            while !monkeys[i].items.is_empty() {
                 let item = monkeys[i].items[0];
                 let operand = match monkey.operation.1.parse() {
                     Ok(x) => x,

@@ -31,7 +31,7 @@ pub fn run(input: String) -> (String, String) {
         .collect();
 
     let answer_one = part_one(crane.clone(), &instructions);
-    let answer_two = part_two(crane.clone(), &instructions);
+    let answer_two = part_two(crane, &instructions);
 
     (answer_one, answer_two)
 }
