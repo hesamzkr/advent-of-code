@@ -92,18 +92,14 @@ fn part_one(mut monkeys: Vec<Monkey>) -> u64 {
         }
     }
 
-    inspections.sort();
-    inspections.reverse();
+    inspections.sort_unstable();
 
-    inspections[0] * inspections[1]
+    inspections[inspections.len() - 2..].iter().product()
 }
 
 fn part_two(mut monkeys: Vec<Monkey>) -> u64 {
     let mut inspections = vec![0; monkeys.len()];
-    let mut modulo = 1;
-    for monkey in &monkeys {
-        modulo = lcm(modulo, monkey.test);
-    }
+    let modulo = monkeys.iter().fold(1, |acc, i| acc * i.test);
 
     for _ in 0..10000 {
         for i in 0..monkeys.len() {
@@ -133,19 +129,7 @@ fn part_two(mut monkeys: Vec<Monkey>) -> u64 {
         }
     }
 
-    inspections.sort();
-    inspections.reverse();
+    inspections.sort_unstable();
 
-    inspections[0] * inspections[1]
-}
-
-fn lcm(a: u64, b: u64) -> u64 {
-    let mut greater = if a > b { a } else { b };
-
-    loop {
-        if greater % a == 0 && greater % b == 0 {
-            return greater;
-        }
-        greater += 1;
-    }
+    inspections[inspections.len() - 2..].iter().product()
 }
