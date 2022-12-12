@@ -1,4 +1,4 @@
-use std::collections::{HashSet, VecDeque};
+use std::collections::HashSet;
 
 pub fn run(input: String) -> (usize, usize) {
     let mut grid: Vec<Vec<char>> = input.lines().map(|x| x.chars().collect()).collect();
@@ -10,18 +10,16 @@ pub fn run(input: String) -> (usize, usize) {
 }
 
 fn part_one(grid: &mut Vec<Vec<char>>) -> usize {
-    let mut start_pos = (0, 0);
-    'outer: for i in 0..grid.len() {
+    for i in 0..grid.len() {
         for j in 0..grid[0].len() {
             if grid[i][j] == 'S' {
-                start_pos = (i, j);
                 grid[i][j] = 'a';
-                break 'outer;
+                return shortest_distance(grid, (i, j)).unwrap();
             }
         }
     }
 
-    shortest_distance(grid, start_pos).unwrap()
+    0
 }
 
 fn part_two(grid: &Vec<Vec<char>>) -> usize {
@@ -46,9 +44,9 @@ fn part_two(grid: &Vec<Vec<char>>) -> usize {
 
 fn shortest_distance(grid: &Vec<Vec<char>>, start_pos: (usize, usize)) -> Option<usize> {
     let mut visited: HashSet<(usize, usize)> = HashSet::new();
-    let mut paths: VecDeque<Vec<(usize, usize)>> = VecDeque::new();
+    let mut paths: Vec<Vec<(usize, usize)>> = Vec::new();
     visited.insert(start_pos);
-    paths.push_back(vec![start_pos]);
+    paths.push(vec![start_pos]);
 
     'outer: while !paths.is_empty() {
         let path = paths[0].clone();
@@ -76,14 +74,14 @@ fn shortest_distance(grid: &Vec<Vec<char>>, start_pos: (usize, usize)) -> Option
                 visited.insert(other_node_coord);
                 let mut temp = path.clone();
                 temp.push(other_node_coord);
-                paths.push_back(temp);
+                paths.push(temp);
                 if other_node == 'E' {
                     break 'outer;
                 }
             }
         }
-        paths.pop_front();
+        paths.remove(0);
     }
 
-    paths.pop_back().map(|path| path.len() - 1)
+    paths.last().map(|path| path.len() - 1)
 }
