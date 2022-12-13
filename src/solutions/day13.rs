@@ -7,7 +7,7 @@ enum Packet {
 }
 
 impl PartialOrd<Packet> for Packet {
-    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         match (self, other) {
             (Packet::Int(a), Packet::Int(b)) => a.partial_cmp(b),
             (Packet::Int(a), Packet::List(b)) => vec![Packet::Int(*a)].partial_cmp(b),
@@ -17,7 +17,13 @@ impl PartialOrd<Packet> for Packet {
     }
 }
 
-pub fn run(input: String) -> (usize, u32) {
+impl Ord for Packet {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.partial_cmp(other).unwrap()
+    }
+}
+
+pub fn run(input: String) -> (usize, usize) {
     let packets: Vec<(Packet, Packet)> = input
         .split("\n\n")
         .map(|x| x.lines())
@@ -34,15 +40,37 @@ pub fn run(input: String) -> (usize, u32) {
     (answer_one, answer_two)
 }
 
-fn part_one(packets: &Vec<(Packet, Packet)>) -> usize {
+fn part_one(packets: &[(Packet, Packet)]) -> usize {
     packets.iter().enumerate().fold(
         0,
         |acc, (i, (left, right))| if left < right { acc + i + 1 } else { acc },
     )
 }
 
-fn part_two(packets: &Vec<(Packet, Packet)>) -> u32 {
-    0
+fn part_two(packets: &[(Packet, Packet)]) -> usize {
+    let mut new_packets: Vec<&Packet> = Vec::new();
+    for (left, right) in packets {
+        new_packets.push(left);
+        new_packets.push(right);
+    }
+
+    let dividers = vec![
+        Packet::List(vec![Packet::List(vec![Packet::Int(2)])]),
+        Packet::List(vec![Packet::List(vec![Packet::Int(6)])]),
+    ];
+
+    new_packets.push(&dividers[0]);
+    new_packets.push(&dividers[1]);
+
+    new_packets.sort_unstable();
+
+    new_packets.iter().enumerate().fold(1, |acc, (i, packet)| {
+        if dividers.contains(packet) {
+            acc * (i + 1)
+        } else {
+            acc
+        }
+    })
 }
 
 fn build_packet(line: &str) -> (Packet, usize) {
