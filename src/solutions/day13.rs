@@ -6,7 +6,7 @@ enum Packet {
     Int(u32),
 }
 
-impl PartialOrd<Packet> for Packet {
+impl PartialOrd for Packet {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         match (self, other) {
             (Packet::Int(a), Packet::Int(b)) => a.partial_cmp(b),
