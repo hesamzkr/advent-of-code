@@ -17,10 +17,10 @@ pub fn run(input: String) -> (usize, i64) {
         .lines()
         .map(|x| x.split_whitespace().collect::<Vec<&str>>())
         .map(|x| {
-            let sensor_x = (&x[2][2..]).replace(",", "").parse().unwrap();
-            let sensor_y = (&x[3][2..]).replace(":", "").parse().unwrap();
-            let beacon_x = (&x[8][2..]).replace(",", "").parse().unwrap();
-            let beacon_y = (&x[9][2..]).parse().unwrap();
+            let sensor_x = (x[2][2..]).replace(',', "").parse().unwrap();
+            let sensor_y = (x[3][2..]).replace(':', "").parse().unwrap();
+            let beacon_x = (x[8][2..]).replace(',', "").parse().unwrap();
+            let beacon_y = (x[9][2..]).parse().unwrap();
             (
                 Point {
                     x: sensor_x,
@@ -35,7 +35,7 @@ pub fn run(input: String) -> (usize, i64) {
         .collect();
 
     let answer_one = part_one(&report);
-    let answer_two = part_two(&report);
+    let answer_two = part_two(&report).unwrap();
 
     (answer_one, answer_two)
 }
@@ -71,7 +71,7 @@ fn part_one(report: &HashMap<Point, Point>) -> usize {
     cant_contain.len()
 }
 
-fn part_two(report: &HashMap<Point, Point>) -> i64 {
+fn part_two(report: &HashMap<Point, Point>) -> Option<i64> {
     const MAX: i64 = 4_000_000;
 
     for y in 0..=MAX {
@@ -95,10 +95,10 @@ fn part_two(report: &HashMap<Point, Point>) -> i64 {
                 }
             }
             if !detected {
-                return 4_000_000 * x + y;
+                return Some(4_000_000 * x + y);
             }
         }
     }
 
-    0
+    None
 }

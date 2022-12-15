@@ -6,7 +6,7 @@ pub fn run(input: String) -> (u32, u32) {
         .map(|x| {
             x.split(" -> ")
                 .map(|y| {
-                    let mut y = y.split(",");
+                    let mut y = y.split(',');
                     (
                         y.next().unwrap().parse().unwrap(),
                         y.next().unwrap().parse().unwrap(),
@@ -96,15 +96,15 @@ fn make_grid(paths: &Vec<Vec<(u32, u32)>>) -> (HashSet<(u32, u32)>, u32) {
             let start = path[i];
             let finish = path[i + 1];
             let x_range = if finish.0 > start.0 {
-                (start.0..finish.0 + 1)
+                start.0..finish.0 + 1
             } else {
-                (finish.0..start.0)
+                finish.0..start.0
             };
 
             let y_range = if finish.1 > start.1 {
-                (start.1..finish.1 + 1)
+                start.1..finish.1 + 1
             } else {
-                (finish.1..start.1)
+                finish.1..start.1
             };
 
             for x in x_range {
