@@ -116,11 +116,7 @@ fn make_grid(paths: &Vec<Vec<(u32, u32)>>) -> (HashSet<(u32, u32)>, u32) {
         }
     }
 
-    let lowest_y = grid
-        .iter()
-        .map(|tuple| tuple.1)
-        .max_by(|x, y| x.cmp(y))
-        .unwrap();
+    let lowest_y = grid.iter().map(|tuple| tuple.1).max().unwrap();
 
     (grid, lowest_y)
 }
