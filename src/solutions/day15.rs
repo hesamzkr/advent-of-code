@@ -1,18 +1,18 @@
 use std::collections::{HashMap, HashSet};
 
-#[derive(PartialEq, Eq, Hash, Debug)]
+#[derive(PartialEq, Eq, Hash)]
 struct Point {
     x: i64,
     y: i64,
 }
 
 impl Point {
-    fn manhattan_distance(&self, other: &Self) -> u64 {
-        self.x.abs_diff(other.x) + self.y.abs_diff(other.y)
+    fn manhattan_distance(&self, other: &Self) -> i64 {
+        (self.x - other.x).abs() + (self.y - other.y).abs()
     }
 }
 
-pub fn run(input: String) -> (u64, u32) {
+pub fn run(input: String) -> (usize, i64) {
     let report: HashMap<Point, Point> = input
         .lines()
         .map(|x| x.split_whitespace().collect::<Vec<&str>>())
@@ -40,62 +40,65 @@ pub fn run(input: String) -> (u64, u32) {
     (answer_one, answer_two)
 }
 
-fn part_one(report: &HashMap<Point, Point>) -> u64 {
-    let y = 2_000_000;
-    // let y = 10;
-    let max_x = report
-        .iter()
-        .map(|(sensor, beacon)| beacon.x)
-        .max()
-        .unwrap();
-    let min_x = report
-        .iter()
-        .map(|(sensor, beacon)| beacon.x)
-        .min()
-        .unwrap();
+fn part_one(report: &HashMap<Point, Point>) -> usize {
+    const Y: i64 = 2_000_000;
 
-    let mut set: HashSet<Point> = HashSet::new();
+    let mut cant_contain: HashSet<Point> = HashSet::new();
     for (sensor, closest_beacon) in report {
-        let distance = sensor.manhattan_distance(closest_beacon) as i64;
-        if sensor.y + distance < y || sensor.y - distance > y {
+        let distance = sensor.manhattan_distance(closest_beacon);
+        if sensor.y + distance < Y || sensor.y - distance > Y {
             continue;
         }
 
-        let max_x_offset = if sensor.y < y {
-            sensor.y + distance - y
+        let max_x_offset = if sensor.y < Y {
+            sensor.y + distance - Y
         } else {
-            y - (sensor.y - distance)
+            Y - (sensor.y - distance)
         };
 
         for x_offset in -max_x_offset..=max_x_offset {
             if (closest_beacon.x - sensor.x, closest_beacon.y - sensor.y)
-                != (x_offset, y - sensor.y)
+                != (x_offset, Y - sensor.y)
             {
-                set.insert(Point {
+                cant_contain.insert(Point {
                     x: sensor.x + x_offset,
-                    y,
+                    y: Y,
                 });
             }
         }
     }
 
-    set.len() as u64
-    // let mut count = 0;
-    // for x in min_x..=max_x {
-    //     let current_point = Point { x, y };
-    //     for (sensor, closest_beacon) in report {
-    //         let distance_to_point = sensor.manhattan_distance(&current_point);
-    //         let closest_distance = sensor.manhattan_distance(closest_beacon);
-    //         if distance_to_point <= closest_distance && current_point != *closest_beacon {
-    //             count += 1;
-    //             break;
-    //         }
-    //     }
-    // }
-
-    // count
+    cant_contain.len()
 }
 
-fn part_two(input: &HashMap<Point, Point>) -> u32 {
+fn part_two(report: &HashMap<Point, Point>) -> i64 {
+    const MAX: i64 = 4_000_000;
+
+    for y in 0..=MAX {
+        let mut x = 0;
+        while x <= MAX {
+            let mut detected = false;
+            for (sensor, closest_beacon) in report {
+                let distance = sensor.manhattan_distance(closest_beacon);
+                if sensor.y + distance < y || sensor.y - distance > y {
+                    continue;
+                }
+                let max_x_offset = if sensor.y < y {
+                    sensor.y + distance - y
+                } else {
+                    y - (sensor.y - distance)
+                };
+                if sensor.x - max_x_offset <= x && sensor.x + max_x_offset >= x {
+                    x = sensor.x + max_x_offset + 1;
+                    detected = true;
+                    break;
+                }
+            }
+            if !detected {
+                return 4_000_000 * x + y;
+            }
+        }
+    }
+
     0
 }
