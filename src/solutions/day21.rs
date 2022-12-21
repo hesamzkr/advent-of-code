@@ -56,15 +56,15 @@ impl Calculation {
 impl Operation {
     fn find_humn(
         &self,
-        path: &Vec<char>,
+        path: &[char],
         monkeys: &HashMap<String, Calculation>,
     ) -> Option<Vec<char>> {
-        if self.lhs == "humn".to_string() {
-            let mut path = path.clone();
+        if self.lhs == *"humn" {
+            let mut path = path.to_owned();
             path.push('l');
             return Some(path);
-        } else if self.rhs == "humn".to_string() {
-            let mut path = path.clone();
+        } else if self.rhs == *"humn" {
+            let mut path = path.to_owned();
             path.push('r');
             return Some(path);
         }
@@ -75,13 +75,13 @@ impl Operation {
             let val = match monkey {
                 Calculation::Value(_) => None,
                 Calculation::Op(operation) => {
-                    let mut path = path.clone();
+                    let mut path = path.to_owned();
                     path.push(direction);
                     operation.find_humn(&path, monkeys)
                 }
             };
 
-            if val != None {
+            if val.is_some() {
                 return val;
             }
         }
@@ -132,7 +132,7 @@ fn part_two(monkeys: &HashMap<String, Calculation>) -> i64 {
     let monkey = monkeys.get(&"root".to_string()).unwrap();
     let path = match monkey {
         Calculation::Value(_) => panic!("Not an Operation"),
-        Calculation::Op(x) => x.find_humn(&vec![], monkeys).unwrap(),
+        Calculation::Op(x) => x.find_humn(&[], monkeys).unwrap(),
     };
 
     let (mut monkey, mut answer) = if path[0] == 'l' {

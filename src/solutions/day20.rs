@@ -28,7 +28,7 @@ fn part_one(input: &Vec<i64>) -> i64 {
     })
 }
 
-fn part_two(input: &Vec<i64>) -> i64 {
+fn part_two(input: &[i64]) -> i64 {
     let input: Vec<i64> = input.iter().map(|x| x * 811589153).collect();
     let mut indices: Vec<usize> = (0..input.len()).collect();
 

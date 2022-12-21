@@ -31,7 +31,7 @@ fn part_one(cubes: &Vec<Vec<i32>>) -> usize {
     surface_area
 }
 
-fn part_two(cubes: &Vec<Vec<i32>>) -> usize {
+fn part_two(cubes: &[Vec<i32>]) -> usize {
     let mut air_cubes: HashSet<Vec<i32>> = HashSet::new();
     let mut frontier: VecDeque<Vec<i32>> = VecDeque::new();
     let mut surface_area = 0;
