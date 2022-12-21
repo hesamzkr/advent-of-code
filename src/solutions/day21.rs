@@ -81,7 +81,7 @@ impl Operation {
                 }
             };
 
-            if let Some(_) = val {
+            if val != None {
                 return val;
             }
         }
@@ -131,7 +131,7 @@ fn part_one(monkeys: &HashMap<String, Calculation>) -> i64 {
 fn part_two(monkeys: &HashMap<String, Calculation>) -> i64 {
     let monkey = monkeys.get(&"root".to_string()).unwrap();
     let path = match monkey {
-        Calculation::Value(_) => panic!(),
+        Calculation::Value(_) => panic!("Not an Operation"),
         Calculation::Op(x) => x.find_humn(&vec![], monkeys).unwrap(),
     };
 
@@ -149,10 +149,7 @@ fn part_two(monkeys: &HashMap<String, Calculation>) -> i64 {
 
     for &direction in &path[1..] {
         let operation = match &monkey {
-            Calculation::Value(i) => {
-                println!("{i}");
-                panic!()
-            }
+            Calculation::Value(_) => panic!("Not an Operation"),
             Calculation::Op(x) => x.clone(),
         };
 
