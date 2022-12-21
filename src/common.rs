@@ -7,15 +7,15 @@ macro_rules! solve {
         println!("\n{}", day_title);
         match fs::read_to_string(format!("inputs/input_{day}.txt")) {
             Ok(input_str) => {
-                let time = std::time::Instant::now();
-                let answers = $md::run(input_str);
+                let start_time = std::time::Instant::now();
+                let (answer_one, answer_two) = $md::run(input_str);
+                let end_time = std::time::Instant::now();
+                println!("Part One: {}", answer_one);
 
-                println!("Part One: {}", answers.0);
-
-                println!("Part Two: {}", answers.1);
+                println!("Part Two: {}", answer_two);
 
                 println!("{}", "-".repeat(day_title.len()));
-                println!("Time taken: {:.2?}", std::time::Instant::now() - time);
+                println!("Time taken: {:.2?}", end_time - start_time);
             }
             Err(_) => println!("inputs/input_{day}.txt doesn't exist or is unreadable"),
         };
