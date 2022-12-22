@@ -1,4 +1,4 @@
-#![allow(warnings)]
+// #![allow(warnings)]
 use std::{
     env, fs,
     io::{self, Write},
@@ -15,8 +15,8 @@ fn main() {
         None => {
             let mut buffer = String::new();
             print!("\nEnter the question number: ");
-            io::stdout().flush();
-            io::stdin().read_line(&mut buffer);
+            io::stdout().flush().unwrap();
+            io::stdin().read_line(&mut buffer).unwrap();
             buffer.trim().to_string()
         }
     };

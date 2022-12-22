@@ -1,3 +1,5 @@
+#![allow(warnings)]
+
 use std::collections::HashSet;
 
 const ROCK_SHAPES: &[&[(i64, i64)]] = &[

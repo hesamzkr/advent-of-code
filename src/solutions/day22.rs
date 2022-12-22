@@ -5,15 +5,7 @@ enum Instruction {
     Rotate(char),
 }
 
-enum Direction {
-    Right,
-    Down,
-    Left,
-    Up,
-}
-
 // [right, down, left, up]
-// [0,     1,    2,    3]
 const DIRECTIONS: [(i32, i32); 4] = [(1, 0), (0, 1), (-1, 0), (0, -1)];
 
 pub fn run(input: String) -> (i32, i32) {
@@ -191,12 +183,12 @@ fn part_two(map: &HashMap<(i32, i32), char>, instructions: &Vec<Instruction>) ->
     1000 * position.1 + 4 * position.0 + facing as i32
 }
 
-fn get_row<'a>(map: &'a HashMap<(i32, i32), char>, target: i32) -> impl 'a + Iterator<Item = i32> {
+fn get_row(map: &'_ HashMap<(i32, i32), char>, target: i32) -> impl '_ + Iterator<Item = i32> {
     map.iter()
-        .filter_map(move |((x, y), tile)| (*y == target).then_some(*x))
+        .filter_map(move |((x, y), _)| (*y == target).then_some(*x))
 }
 
-fn get_col<'a>(map: &'a HashMap<(i32, i32), char>, target: i32) -> impl 'a + Iterator<Item = i32> {
+fn get_col(map: &'_ HashMap<(i32, i32), char>, target: i32) -> impl '_ + Iterator<Item = i32> {
     map.iter()
-        .filter_map(move |((x, y), tile)| (*x == target).then_some(*y))
+        .filter_map(move |((x, y), _)| (*x == target).then_some(*y))
 }
