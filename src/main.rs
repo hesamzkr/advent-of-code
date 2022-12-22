@@ -1,5 +1,8 @@
 #![allow(warnings)]
-use std::{env, fs, io};
+use std::{
+    env, fs,
+    io::{self, Write},
+};
 
 mod common;
 mod solutions;
@@ -11,8 +14,9 @@ fn main() {
         Some(x) => x.to_string(),
         None => {
             let mut buffer = String::new();
-            println!("Enter the question number:");
-            io::stdin().read_line(&mut buffer).unwrap();
+            print!("\nEnter the question number: ");
+            io::stdout().flush();
+            io::stdin().read_line(&mut buffer);
             buffer.trim().to_string()
         }
     };
@@ -21,8 +25,7 @@ fn main() {
         Ok(day_num) => solutions::run(day_num),
         Err(_) => {
             if day_str == "all" {
-                let dir = fs::read_dir("./src/solutions").unwrap();
-                let latest_solution = dir.fold(0, |i, _| i + 1);
+                let latest_solution = fs::read_dir("./src/solutions").unwrap().count() as u16;
                 for day_num in 1..latest_solution {
                     solutions::run(day_num);
                 }
