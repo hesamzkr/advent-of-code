@@ -1,4 +1,4 @@
-// #![allow(warnings)]
+#![allow(warnings)]
 use std::{
     env, fs,
     io::{self, Write},

@@ -22,7 +22,7 @@ mod day18;
 mod day20;
 mod day21;
 mod day22;
-// mod day23;
+mod day23;
 // mod day24;
 // mod day25;
 
@@ -52,7 +52,7 @@ pub fn run(day: u16) {
         20 => solve!(day20),
         21 => solve!(day21),
         22 => solve!(day22),
-        // 23 => solve!(day23),
+        23 => solve!(day23),
         // 24 => solve!(day24),
         // 25 => solve!(day25),
         1..=25 => println!("Day {day} is not implemented"),
