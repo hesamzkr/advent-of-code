@@ -73,8 +73,7 @@ fn part_one(map: &mut HashMap<(i32, i32), Tile>) -> u32 {
 
         while !movements.is_empty() {
             let (current, proposed) = movements.pop().unwrap();
-            let proposed_moves: Vec<(i32, i32)> = movements.iter().map(|x| x.1).collect();
-            if proposed_moves.contains(&proposed) {
+            if movements.iter().map(|x| x.1).any(|x| x == proposed) {
                 movements.retain(|&item| item.1 != proposed);
             } else {
                 map.insert(current, Tile::Ground);
@@ -103,7 +102,7 @@ fn part_one(map: &mut HashMap<(i32, i32), Tile>) -> u32 {
     count
 }
 
-fn part_two(input: &HashMap<(i32, i32), Tile>) -> u32 {
+fn part_two(_input: &HashMap<(i32, i32), Tile>) -> u32 {
     0
 }
 

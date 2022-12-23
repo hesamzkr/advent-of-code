@@ -1,11 +1,12 @@
 #[macro_export]
 macro_rules! solve {
-    ($md:ident) => {{
+    ($year:ident, $md:ident) => {{
         use std::fs;
+        let year = $year;
         let day = &stringify!($md)[3..];
         let day_title = format!("--------- Day {day} ---------");
         println!("\n{}", day_title);
-        match fs::read_to_string(format!("inputs/input_{day}.txt")) {
+        match fs::read_to_string(format!("inputs/year{year}/input_{day}.txt")) {
             Ok(input_str) => {
                 let start_time = std::time::Instant::now();
                 let (answer_one, answer_two) = $md::run(input_str);
