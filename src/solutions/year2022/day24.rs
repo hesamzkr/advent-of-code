@@ -4,10 +4,10 @@ use std::mem::swap;
 type Point = (usize, usize);
 
 enum Direction {
-    Up,
-    Down,
     Right,
-    Left
+    Left,
+    Down,
+    Up
 }
 
 pub fn run(input: String) -> (usize, usize) {
@@ -21,10 +21,10 @@ pub fn run(input: String) -> (usize, usize) {
         for (x, c) in line.chars().enumerate() {
             if c != '.' && c != '#' {
                 blizzards.entry((x, y)).or_default().push(match c {
-                    '^' => Direction::Up,
-                    'v' => Direction::Down,
                     '>' => Direction::Right,
                     '<' => Direction::Left,
+                    'v' => Direction::Down,
+                    '^' => Direction::Up,
                     _ => panic!("Invalid character in input"),
                 })
             }
@@ -78,8 +78,8 @@ fn part_two(blizzards: &mut HashMap<Point, Vec<Direction>>, width: usize, height
 }
 
 fn find_path(
-    start: (usize, usize),
-    goal: (usize, usize),
+    start: Point,
+    goal: Point,
     blizzards: &mut HashMap<Point, Vec<Direction>>,
     width: usize,
     height: usize,
@@ -90,7 +90,7 @@ fn find_path(
     current.insert(start);
     loop {
         let mut to_add = Vec::new();
-        for pos in blizzards.keys().copied().collect::<Vec<_>>() {
+        for pos in blizzards.keys().copied().collect::<Vec<Point>>() {
             let (x, y) = pos;
             for dir in blizzards.get_mut(&pos).unwrap().drain(0..) {
                 match dir {
