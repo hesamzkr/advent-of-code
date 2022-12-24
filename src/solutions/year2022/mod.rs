@@ -23,7 +23,7 @@ mod day20;
 mod day21;
 mod day22;
 mod day23;
-// mod day24;
+mod day24;
 // mod day25;
 
 use crate::solve;
@@ -48,16 +48,16 @@ pub fn run(day: u16) {
         14 => solve!(YEAR, day14),
         15 => solve!(YEAR, day15),
         16 => solve!(YEAR, day16),
-        17 => solve!(YEAR, day17),
+        // 17 => solve!(YEAR, day17),
         18 => solve!(YEAR, day18),
         // 19 => solve!(YEAR, day19),
         20 => solve!(YEAR, day20),
         21 => solve!(YEAR, day21),
         22 => solve!(YEAR, day22),
         23 => solve!(YEAR, day23),
-        // 24 => solve!(day24),
-        // 25 => solve!(day25),
-        1..=25 => println!("Day {day} is not implemented"),
+        24 => solve!(YEAR, day24),
+        // 25 => solve!(YEAR, day25),
+        1..=25 => println!("Day {day} is not implemented for {YEAR}"),
         _ => println!("Invalid day number"),
     };
 }
