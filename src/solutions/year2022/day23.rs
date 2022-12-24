@@ -27,6 +27,7 @@ pub fn run(input: String) -> (u32, u32) {
 }
 
 fn part_one(mut map: HashMap<(i32, i32), Tile>) -> u32 {
+    // north direction is -1 due to the parsing of the file starting from the top
     let mut direction_order: VecDeque<[(i32, i32); 3]> = VecDeque::from_iter([
         [(0, -1), (1, -1), (-1, -1)],
         [(0, 1), (1, 1), (-1, 1)],
@@ -104,7 +105,7 @@ fn part_one(mut map: HashMap<(i32, i32), Tile>) -> u32 {
 }
 
 fn part_two(mut map: HashMap<(i32, i32), Tile>) -> u32 {
-    
+    // north direction is -1 due to the parsing of the file starting from the top
     let mut direction_order: VecDeque<[(i32, i32); 3]> = VecDeque::from_iter([
         [(0, -1), (1, -1), (-1, -1)],
         [(0, 1), (1, 1), (-1, 1)],
