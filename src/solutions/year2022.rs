@@ -56,7 +56,7 @@ pub fn run(day: u16) {
         22 => solve!(YEAR, day22),
         23 => solve!(YEAR, day23),
         24 => solve!(YEAR, day24),
-        // 25 => solve!(YEAR, day25),
+        25 => solve!(YEAR, day25),
         1..=25 => println!("Day {day} is not implemented for {YEAR}"),
         _ => println!("Invalid day number"),
     };
