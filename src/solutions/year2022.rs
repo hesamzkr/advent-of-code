@@ -48,7 +48,7 @@ pub fn run(day: u16) {
         14 => solve!(YEAR, day14),
         15 => solve!(YEAR, day15),
         16 => solve!(YEAR, day16),
-        // 17 => solve!(YEAR, day17),
+        17 => solve!(YEAR, day17),
         18 => solve!(YEAR, day18),
         // 19 => solve!(YEAR, day19),
         20 => solve!(YEAR, day20),
