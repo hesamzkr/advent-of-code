@@ -1,5 +1,4 @@
 #![allow(warnings)]
-// #![allow(clippy::match_overlapping_arm)]
 use std::{
     env, fs,
     io::{self, Write},
