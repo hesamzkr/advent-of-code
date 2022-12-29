@@ -1,4 +1,4 @@
-use std::{fmt::Display, ops::{Sub, Add, Mul, Div}};
+use std::{fmt::Display, ops::{Sub, Add, Mul, Div}, cmp::Ordering};
 
 
 #[derive(PartialEq, Eq, Clone, Copy, Debug, Hash)]
@@ -45,7 +45,24 @@ impl Div<i64> for Point {
     }
 }
 
+impl PartialOrd for Point {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.modulus().partial_cmp(&other.modulus())
+    }
+}
+
+impl Ord for Point {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.partial_cmp(other).unwrap()
+    }
+}
+
 impl Point {
+    pub const UP: Point = Point { x: 0, y: 1 };
+    pub const DOWN: Point = Point { x: 0, y: -1 };
+    pub const RIGHT: Point = Point { x: 1, y: 0 };
+    pub const LEFT: Point = Point { x: -1, y: 0 };
+
     pub fn new(x: i64, y: i64) -> Point {
         Point { x, y }
     }
@@ -64,5 +81,32 @@ impl Point {
 
     pub fn dot(&self, rhs: &Self) -> i64 {
         self.x * rhs.x + self.y * rhs.y
+    }
+
+    pub fn angle_between(&self, other: &Self) -> f64 {
+        todo!()
+    }
+
+    pub fn angle(&self) -> f64 {
+        todo!()
+    }
+
+    pub fn rotate(&mut self, degrees: i64) {
+        todo!()
+    }
+
+    pub fn perpendicular(&self) -> Self {
+        Point::new(self.y, -self.x)
+    }
+
+    pub fn is_parallel(&self, other: &Self) -> bool {
+        self.is_vector() && other.is_vector() && ( 
+        self.x == 0 && other.x == 0 ||
+        self.y == 0 && other.y == 0 ||
+        self.x.checked_div(other.x).unwrap_or(0) == self.y.checked_div(other.y).unwrap_or(0)) 
+    }
+
+    pub fn is_vector(&self) -> bool {
+        self.x != 0 || self.y != 0
     }
 }
