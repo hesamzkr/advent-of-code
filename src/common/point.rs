@@ -89,8 +89,9 @@ impl Point {
     }
 
     pub fn rotate(&mut self, degrees: i64) {
-        let x_degrees = (self.x * degrees) as f64;
-        let y_degrees = (self.y * degrees) as f64;
+        let radians = degrees as f64 * PI / 180.0;
+        let x_degrees = self.x as f64 * radians;
+        let y_degrees = self.y as f64 * radians;
         self.x = (x_degrees.cos() - y_degrees.sin()) as i64;
         self.y = (x_degrees.sin() + y_degrees.cos()) as i64;
     }
