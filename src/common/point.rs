@@ -81,7 +81,7 @@ impl Point {
     }
 
     pub fn angle_between(&self, other: &Self) -> f64 {
-        todo!()
+        (self.dot(other) / (self.modulus() * other.modulus())).acos()
     }
 
     pub fn angle(&self) -> f64 {
