@@ -85,7 +85,7 @@ impl Point {
     }
 
     pub fn angle(&self) -> f64 {
-        todo!()
+        self.angle_between(&Point::RIGHT)
     }
 
     pub fn rotate(&mut self, degrees: i64) {
