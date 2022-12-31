@@ -75,6 +75,10 @@ impl Point {
     pub fn dot(&self, rhs: &Self) -> i64 {
         self.x * rhs.x + self.y * rhs.y
     }
+    
+    pub fn manhattan_distance(&self, other: &Self) -> i64 {
+        self.x.abs_diff(other.x) + self.y.abs_diff(other.y)
+    }
 
     pub fn angle_between(&self, other: &Self) -> f64 {
         todo!()
