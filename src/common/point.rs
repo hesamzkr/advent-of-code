@@ -89,10 +89,10 @@ impl Point {
     }
 
     pub fn rotate(&mut self, degrees: i64) {
-        let new_x = (self.x * degrees).into::<f64>().cos() - (self.y * degrees).into::<f64>().sin();
-        let new_y = (self.x * degrees).into::<f64>().sin() + (self.y * degrees).into::<f64>().cos();
-        self.x = new_x;
-        self.y = new_y;
+        let x_degrees = (self.x * degrees) as f64;
+        let y_degrees = (self.y * degrees) as f64;
+        self.x = (x_degrees.cos() - y_degrees.sin()) as i64;
+        self.y = (x_degrees.sin() + y_degrees.cos()) as i64;
     }
 
     pub fn perpendicular(&self) -> Self {
