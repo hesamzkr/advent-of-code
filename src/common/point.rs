@@ -58,6 +58,7 @@ impl Ord for Point {
 }
 
 impl Point {
+    pub const ZERO: Point = Point { x: 0, y: 0 };
     pub const UP: Point = Point { x: 0, y: 1 };
     pub const DOWN: Point = Point { x: 0, y: -1 };
     pub const RIGHT: Point = Point { x: 1, y: 0 };
@@ -101,13 +102,13 @@ impl Point {
     }
 
     pub fn is_parallel(&self, other: &Self) -> bool {
-        self.is_vector() && other.is_vector() && ( 
+        !self.is_zero() && !other.is_zero() && ( 
         self.x == 0 && other.x == 0 ||
         self.y == 0 && other.y == 0 ||
         self.x.checked_div(other.x).unwrap_or(0) == self.y.checked_div(other.y).unwrap_or(0)) 
     }
 
-    pub fn is_vector(&self) -> bool {
-        self.x != 0 || self.y != 0
+    pub fn is_zero(&self) -> bool {
+        self == &Point::ZERO
     }
 }
