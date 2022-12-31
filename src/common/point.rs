@@ -67,16 +67,9 @@ impl Point {
         Point { x, y }
     }
 
-    pub fn modulus(&self) -> i64 {
+    pub fn modulus(&self) -> f64 {
         let sum = (self.x.pow(2) + self.y.pow(2)) as f64;
-        sum.sqrt() as i64
-    }
-
-    pub fn normalize(&mut self) -> &Self {
-        let magnitude = self.modulus();
-        self.x /= magnitude;
-        self.y /= magnitude;
-        self 
+        sum.sqrt()
     }
 
     pub fn dot(&self, rhs: &Self) -> i64 {
