@@ -21,13 +21,13 @@ pub fn run(input: String) -> (String, String) {
     (answer_one, "N/A".to_string())
 }
 
-fn part_one(numbers: &Vec<Vec<i64>>) -> String {
+fn part_one(numbers: &[Vec<i64>]) -> String {
     let mut sum = numbers.iter().fold(0, |acc, number| acc + {
         number.iter().enumerate().fold(0, |acc, (i, digit)| acc + 5_i64.pow(i as u32) * digit)
     });
         
     let mut snafu: Vec<char> = vec![];
-    while (sum != 0) {
+    while sum != 0 {
         snafu.insert(0, "012=-".chars().nth((sum % 5) as usize).unwrap());
         sum = (sum + 2) / 5;
     }

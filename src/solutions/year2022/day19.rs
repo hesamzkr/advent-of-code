@@ -86,7 +86,7 @@ pub fn run(input: String) -> (u32, u32) {
     let blueprints: Vec<Blueprint> = input
     .lines()
     .map(|line| {
-        let mut line_split: Vec<&str> = line.split_whitespace().collect();
+        let line_split: Vec<&str> = line.split_whitespace().collect();
 
         let ore_ore = line_split[6].parse().unwrap();
         let clay_ore = line_split[12].parse().unwrap();

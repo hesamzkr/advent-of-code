@@ -47,7 +47,7 @@ impl Div<i64> for Point {
 
 impl PartialOrd for Point {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        self.modulus().partial_cmp(&other.modulus())
+        self.magnitude().partial_cmp(&other.magnitude())
     }
 }
 
@@ -58,7 +58,7 @@ impl Ord for Point {
 }
 
 impl Point {
-    pub const ZERO: Point = Point { x: 0, y: 0 };
+    pub const ORIGIN: Point = Point { x: 0, y: 0 };
     pub const UP: Point = Point { x: 0, y: 1 };
     pub const DOWN: Point = Point { x: 0, y: -1 };
     pub const RIGHT: Point = Point { x: 1, y: 0 };
@@ -68,7 +68,7 @@ impl Point {
         Point { x, y }
     }
 
-    pub fn modulus(&self) -> f64 {
+    pub fn magnitude(&self) -> f64 {
         let sum = (self.x.pow(2) + self.y.pow(2)) as f64;
         sum.sqrt()
     }
@@ -77,38 +77,45 @@ impl Point {
         self.x * rhs.x + self.y * rhs.y
     }
     
-    pub fn manhattan_distance(&self, other: &Self) -> i64 {
+    pub fn manhattan_distance(&self, other: &Self) -> u64 {
         self.x.abs_diff(other.x) + self.y.abs_diff(other.y)
     }
 
     pub fn angle_between(&self, other: &Self) -> f64 {
-        (self.dot(other) / (self.modulus() * other.modulus())).acos()
+        (self.dot(other) as f64 / (self.magnitude() * other.magnitude())).acos()
     }
 
     pub fn angle(&self) -> f64 {
         self.angle_between(&Point::RIGHT)
     }
 
-    pub fn rotate(&mut self, degrees: i64) {
-        let radians = degrees as f64 * PI / 180.0;
-        let x_degrees = self.x as f64 * radians;
-        let y_degrees = self.y as f64 * radians;
-        self.x = (x_degrees.cos() - y_degrees.sin()) as i64;
-        self.y = (x_degrees.sin() + y_degrees.cos()) as i64;
+    pub fn rotate_clockwise(&mut self) {
+        let x = self.x;
+        let y = self.y;
+        self.x = y;
+        self.y = -x;   
     }
 
-    pub fn perpendicular(&self) -> Self {
-        Point::new(self.y, -self.x)
+    pub fn rotate_anti_clockwise(&mut self) {
+        let x = self.x;
+        let y = self.y;
+        self.x = -y;
+        self.y = x;   
     }
 
     pub fn is_parallel(&self, other: &Self) -> bool {
-        !self.is_zero() && !other.is_zero() && ( 
-        self.x == 0 && other.x == 0 ||
-        self.y == 0 && other.y == 0 ||
-        self.x.checked_div(other.x).unwrap_or(0) == self.y.checked_div(other.y).unwrap_or(0)) 
+        !self.is_zero() && !other.is_zero() && (
+            (self.x * other.y) - (self.y * other.x)) == 0
     }
 
     pub fn is_zero(&self) -> bool {
-        self == &Point::ZERO
+        self == &Point::ORIGIN
     }
+}
+
+#[macro_export]
+macro_rules! point {
+    ($x:ident, $y:ident) => { point!(@ $x $y) };
+    ($x:literal, $y:literal) => { point!(@ $x $y) };
+    (@ $x:tt $y:tt) => { crate::common::Point::new($x, $y) };
 }
