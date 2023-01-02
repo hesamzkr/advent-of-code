@@ -3,8 +3,8 @@ use std::{fmt::Display, ops::{Sub, Add, Mul, Div}, cmp::Ordering};
 
 #[derive(PartialEq, Eq, Clone, Copy, Debug, Hash)]
 pub struct Point {
-    x: i64,
-    y: i64,
+    pub x: i64,
+    pub y: i64,
 }
 
 impl Display for Point {
