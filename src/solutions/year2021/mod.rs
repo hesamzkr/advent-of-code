@@ -1,6 +1,6 @@
 mod day1;
 mod day2;
-// mod day3;
+mod day3;
 // mod day4;
 // mod day5;
 // mod day6;
@@ -34,7 +34,7 @@ pub fn run(day: u16) {
     match day {
         1 => solve!(YEAR, day1),
         2 => solve!(YEAR, day2),
-        // 3 => solve!(YEAR, day3),
+        3 => solve!(YEAR, day3),
         // 4 => solve!(YEAR, day4),
         // 5 => solve!(YEAR, day5),
         // 6 => solve!(YEAR, day6),
