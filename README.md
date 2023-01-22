@@ -1,7 +1,9 @@
-# Advent of Code
+# Advent of Code [2021-2022]
 
-Run a specific day with `cargo run [day number]` (eg. `cargo run 5`).
+-   Run a specific day with `cargo run [year] [day]` .
 
-Run all solutions so far with `cargo run all`.
+-   If year isn't specified the latest year will be assumed.
 
-Run with just `cargo run` to read day number from stdin.
+-   Run all solutions so far with `all` as `[day]`.
+
+-   Run with just `cargo run` to read year and day from console.
