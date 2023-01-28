@@ -1,0 +1,2 @@
+language = "csharp"
+run = "cd Day14 && mcs Day14.cs && mono Day14.exe"
