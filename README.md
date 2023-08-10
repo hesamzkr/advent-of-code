@@ -2,10 +2,6 @@
 
 # How to run
 
-## [2020]
-
-Run each day by running the executable file of the day.
-
 ## [2021-2022]
 
 -   Run a specific day with `cargo run [year] [day]` .
@@ -15,6 +11,10 @@ Run each day by running the executable file of the day.
 -   Run all solutions so far with `all` as `[day]`.
 
 -   Run with just `cargo run` to read year and day from console.
+
+## [2020]
+
+Run each day by running the executable file of the day.
 
 # Links
 
