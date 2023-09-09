@@ -24,3 +24,23 @@ macro_rules! solve {
     }};
 }
 
+#[macro_export]
+macro_rules! generate_year_match {
+    ($value:ident, $($module:ident),* ) => {
+        match $value {
+            $(
+                stringify!($module) => crate::solve!(YEAR, $module),
+            )*
+            _ => println!("Invalid day number"),
+        };
+    };
+}
+
+#[macro_export]
+macro_rules! import_modules {
+    ( $( $module:ident ),* ) => {
+        $(
+            mod $module;
+        )*
+    };
+}
