@@ -49,3 +49,8 @@ Click on the stars to open the days solution
 | 25 |  |  | [:star2:](2021-22/src/solutions/year2022/day25.rs) |
 | Total Stars | 27 | 24 | 50 |
 | Language | C# | Rust :crab: | Rust :crab: |
+
+
+:star: Completed Part 1
+
+:star2: Completed Parts 1 and 2
