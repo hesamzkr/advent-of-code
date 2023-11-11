@@ -17,11 +17,11 @@ fn main() {
         3.. => {
             year = sysargs.get(1).unwrap().to_string();
             day = sysargs.get(2).unwrap().to_string();
-        },
+        }
         2 => {
-            year = "2022".to_string();
+            year = "2023".to_string();
             day = sysargs.get(1).unwrap().to_string();
-        },
+        }
         _ => {
             let mut buffer = String::new();
             print!("\nEnter the year: ");
@@ -37,18 +37,18 @@ fn main() {
     }
 
     match year.parse() {
-        Ok(year) => {
-            match day.parse() {
-                Ok(day) => solutions::run(year, day),
-                Err(_) => {
-                    if day == "all" {
-                        let latest_solution = fs::read_dir(format!("src/solutions/year{year}")).unwrap().count() as u16;
-                        for day in 1..latest_solution {
-                            solutions::run(year, day);
-                        }
-                    } else {
-                        println!("Please enter a day number or 'all'");
+        Ok(year) => match day.parse() {
+            Ok(day) => solutions::run(year, day),
+            Err(_) => {
+                if day == "all" {
+                    let latest_solution = fs::read_dir(format!("src/solutions/year{year}"))
+                        .unwrap()
+                        .count() as u16;
+                    for day in 1..latest_solution {
+                        solutions::run(year, day);
                     }
+                } else {
+                    println!("Please enter a day number or 'all'");
                 }
             }
         },
