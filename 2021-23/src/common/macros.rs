@@ -5,7 +5,9 @@ macro_rules! solve {
         let year = $year;
         let day = &stringify!($md)[3..];
         let day_title = format!("--------- Day {day} ---------");
-        println!("\n   Advent Of Code {year}");
+        let year_string = format!("Advent Of Code {year}");
+        let spaces = " ".repeat((day_title.len() - year_string.len()) / 2);
+        println!("\n{}{}{}", spaces, year_string, spaces);
         println!("{day_title}");
         match fs::read_to_string(format!("inputs/year{year}/input_{day}.txt")) {
             Ok(input_str) => {
