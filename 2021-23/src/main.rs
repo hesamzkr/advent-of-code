@@ -1,4 +1,5 @@
 #![allow(warnings)]
+use dotenv::dotenv;
 use std::{
     env, fs,
     io::{self, Write},
@@ -9,6 +10,7 @@ mod solutions;
 
 fn main() {
     let sysargs: Vec<String> = env::args().collect();
+    dotenv().ok();
 
     let year;
     let day;
