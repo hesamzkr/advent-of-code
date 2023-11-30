@@ -1,0 +1,9 @@
+[package]
+name = "advent_of_code"
+version = "0.1.0"
+authors = ["hesamzkr <hesam.zk.81@gmail.com>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
