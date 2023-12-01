@@ -7,52 +7,49 @@ pub fn run(input: String) -> (u32, u32) {
     (answer_one, answer_two)
 }
 
-fn part_one(input: &[&str]) -> u32 {
-    let mut sum = 0;
-    for line in input {
-        let mut numbers = vec![];
-        for char in line.chars() {
-            if char.is_numeric() {
-                numbers.push(char);
-            }
-        }
-
-        sum += format!("{}{}", numbers[0], numbers[numbers.len() - 1])
-            .parse::<u32>()
-            .unwrap();
-    }
-
-    sum
+fn part_one(lines: &[&str]) -> u32 {
+    lines
+        .iter()
+        .map(|line| line.chars().filter(|char| char.is_numeric()))
+        .map(|mut numbers| {
+            let last = numbers.clone().last().unwrap();
+            format!("{}{}", numbers.next().unwrap(), last)
+        })
+        .map(|number| number.parse::<u32>().unwrap())
+        .sum()
 }
 
-fn part_two(input: &[&str]) -> u32 {
-    let mut sum = 0;
+fn part_two(lines: &[&str]) -> u32 {
     let word_numbers: [&str; 9] = [
         "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
     ];
-    for line in input {
-        let mut numbers: Vec<(String, usize)> = vec![];
 
-        for (i, char) in line.chars().enumerate() {
-            if char.is_numeric() {
-                numbers.push((char.to_string(), i));
-            }
-        }
-
-        for (i, word) in word_numbers.iter().enumerate() {
-            if let indices = line.match_indices(word).collect::<Vec<_>>() {
-                for index in indices {
-                    numbers.push((format!("{}", i + 1), index.0));
+    lines
+        .iter()
+        .map(|line| {
+            let v1 = line.chars().enumerate().filter_map(|(i, char)| {
+                if char.is_numeric() {
+                    Some((char.to_string(), i))
+                } else {
+                    None
                 }
-            }
-        }
+            });
 
-        numbers.sort_by(|a, b| a.1.cmp(&b.1));
+            let v2 = word_numbers.iter().enumerate().flat_map(|(i, word)| {
+                line.match_indices(word)
+                    .map(move |(index, _)| (format!("{}", i + 1), index))
+            });
 
-        sum += format!("{}{}", numbers[0].0, numbers[numbers.len() - 1].0)
-            .parse::<u32>()
-            .unwrap();
-    }
-
-    sum
+            v1.chain(v2).collect::<Vec<(String, usize)>>()
+        })
+        .map(|mut numbers| {
+            numbers.sort_by(|a, b| a.1.cmp(&b.1));
+            let number = format!(
+                "{}{}",
+                numbers.first().unwrap().0,
+                numbers.last().unwrap().0
+            );
+            number.parse::<u32>().unwrap()
+        })
+        .sum()
 }
