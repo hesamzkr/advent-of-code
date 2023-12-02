@@ -1,3 +1,15 @@
+#[derive(Copy, Clone, PartialEq)]
+enum Color {
+    Red = 12,
+    Green = 13,
+    Blue = 14,
+}
+
+struct Pick {
+    number: u32,
+    color: Color,
+}
+
 pub fn run(input: String) -> (usize, u32) {
     let input = input
         .lines()
@@ -9,7 +21,15 @@ pub fn run(input: String) -> (usize, u32) {
                         .split(',')
                         .map(|pick| {
                             let x = pick.split_whitespace().collect::<Vec<&str>>();
-                            (x[0].parse::<u32>().unwrap(), x[1])
+                            Pick {
+                                number: x[0].parse::<u32>().unwrap(),
+                                color: match x[1] {
+                                    "red" => Color::Red,
+                                    "green" => Color::Green,
+                                    "blue" => Color::Blue,
+                                    _ => panic!("Unknown Color"),
+                                },
+                            }
                         })
                         .collect::<Vec<_>>()
                 })
@@ -23,63 +43,45 @@ pub fn run(input: String) -> (usize, u32) {
     (answer_one, answer_two)
 }
 
-fn part_one(games: &Vec<Vec<Vec<(u32, &str)>>>) -> usize {
-    let mut sum = 0;
-    for (i, game) in games.iter().enumerate() {
-        let mut game_is_valid = true;
-        for round in game {
-            for (num, color) in round {
-                let check = match *color {
-                    "red" => *num > 12,
-                    "green" => *num > 13,
-                    "blue" => *num > 14,
-                    _ => panic!("joerover"),
-                };
-                if check {
-                    game_is_valid = false;
-                }
+fn part_one(games: &Vec<Vec<Vec<Pick>>>) -> usize {
+    games
+        .iter()
+        .enumerate()
+        .filter_map(|(i, game)| {
+            if game
+                .iter()
+                .any(|round| round.iter().any(|pick| pick.number > (pick.color as u32)))
+            {
+                None
+            } else {
+                Some(i + 1)
             }
-        }
-
-        if game_is_valid {
-            sum += i + 1;
-        }
-    }
-
-    sum
+        })
+        .sum()
 }
 
-fn part_two(games: &Vec<Vec<Vec<(u32, &str)>>>) -> u32 {
-    let mut sum = 0;
-    for (i, game) in games.iter().enumerate() {
-        let mut max_red = 0;
-        let mut max_blue = 0;
-        let mut max_green = 0;
-        for round in game {
-            for (num, color) in round {
-                let check = match *color {
-                    "red" => {
-                        if num > &max_red {
-                            max_red = *num;
-                        }
-                    }
-                    "green" => {
-                        if num > &max_green {
-                            max_green = *num;
-                        }
-                    }
-                    "blue" => {
-                        if num > &max_blue {
-                            max_blue = *num;
-                        }
-                    }
-                    _ => panic!("joerover"),
-                };
-            }
-        }
-
-        sum += max_red * max_green * max_blue;
-    }
-
-    sum
+fn part_two(games: &Vec<Vec<Vec<Pick>>>) -> u32 {
+    let colors = [Color::Red, Color::Green, Color::Blue];
+    games
+        .iter()
+        .map(|game| {
+            colors
+                .iter()
+                .map(|color| {
+                    game.iter()
+                        .flat_map(|round| {
+                            round.iter().filter_map(|pick| {
+                                if pick.color == *color {
+                                    Some(pick.number)
+                                } else {
+                                    None
+                                }
+                            })
+                        })
+                        .max()
+                        .unwrap()
+                })
+                .fold(1, |acc, x| acc * x)
+        })
+        .sum()
 }
