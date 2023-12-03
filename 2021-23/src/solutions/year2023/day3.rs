@@ -1,5 +1,3 @@
-use std::char;
-
 use regex::{Match, Regex};
 
 pub fn run(input: String) -> (u32, u32) {
