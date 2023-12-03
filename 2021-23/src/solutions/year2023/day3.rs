@@ -1,7 +1,39 @@
 use regex::{Match, Regex};
+use std::collections::HashMap;
+
+#[derive(Eq, Hash, PartialEq, Debug)]
+enum Part {
+    Number((u32, isize)), // (number, length)
+    Symbol(char),
+}
+
+type Point = (isize, isize); // (row, col)
 
 pub fn run(input: String) -> (u32, u32) {
-    let input: Vec<Vec<char>> = input.lines().map(|line| line.chars().collect()).collect();
+    let pattern = Regex::new(r"\d+").unwrap();
+    let input: HashMap<Point, Part> = input
+        .lines()
+        .enumerate()
+        .flat_map(|(i, line)| {
+            let matches = pattern.find_iter(line).map(move |m| {
+                let number = m.as_str().parse::<u32>().unwrap();
+                (
+                    (i as isize, m.start() as isize),
+                    Part::Number((number, m.as_str().len() as isize)),
+                )
+            });
+
+            let symbols = line.chars().enumerate().filter_map(move |(j, char)| {
+                if char != '.' && !char.is_numeric() {
+                    Some(((i as isize, j as isize), Part::Symbol(char)))
+                } else {
+                    None
+                }
+            });
+
+            matches.chain(symbols)
+        })
+        .collect();
 
     let answer_one = part_one(&input);
     let answer_two = part_two(&input);
@@ -9,51 +41,40 @@ pub fn run(input: String) -> (u32, u32) {
     (answer_one, answer_two)
 }
 
-fn part_one(input: &Vec<Vec<char>>) -> u32 {
+fn part_one(schematic: &HashMap<Point, Part>) -> u32 {
     let mut sum = 0;
-    let pattern = Regex::new(r"\d+").unwrap();
 
-    for (i, line) in input.iter().enumerate() {
-        let line_string = line.into_iter().collect::<String>();
-        let matches: Vec<Match> = pattern.find_iter(line_string.as_str()).collect();
+    for ((row, col), part) in schematic {
+        match part {
+            Part::Symbol(_) => continue,
+            Part::Number((number, length)) => {
+                let mut is_valid = false;
 
-        for m in matches {
-            let mut is_valid = false;
-            let number = m.as_str().parse::<u32>().unwrap();
-            let start_index = m.start();
-            let end_index = m.end();
+                for x in (*col..(col + length)) {
+                    let checks = [
+                        (row - 1, x - 1),
+                        (row - 1, x),
+                        (row - 1, x + 1),
+                        (*row, x - 1),
+                        (*row, x + 1),
+                        (row + 1, x - 1),
+                        (row + 1, x),
+                        (row + 1, x + 1),
+                    ];
 
-            for j in start_index..end_index {
-                if i > 0 && j > 0 && is_symbol(input[i - 1][j - 1]) {
-                    is_valid = true;
-                }
-                if i > 0 && is_symbol(input[i - 1][j]) {
-                    is_valid = true;
-                }
-                if i > 0 && j < line.len() - 1 && is_symbol(input[i - 1][j + 1]) {
-                    is_valid = true;
-                }
-
-                if j < line.len() - 1 && is_symbol(input[i][j + 1]) {
-                    is_valid = true;
-                }
-                if j > 0 && is_symbol(input[i][j - 1]) {
-                    is_valid = true;
+                    for check in checks {
+                        if let Some(other) = schematic.get(&check) {
+                            match other {
+                                Part::Symbol(_) => is_valid = true,
+                                Part::Number(_) => continue,
+                            }
+                        }
+                    }
                 }
 
-                if i < input.len() - 1 && j > 0 && is_symbol(input[i + 1][j - 1]) {
-                    is_valid = true;
+                if is_valid {
+                    sum += number;
                 }
-                if i < input.len() - 1 && is_symbol(input[i + 1][j]) {
-                    is_valid = true;
-                }
-                if i < input.len() - 1 && j < line.len() - 1 && is_symbol(input[i + 1][j + 1]) {
-                    is_valid = true;
-                }
-            }
-
-            if is_valid {
-                sum += number
             }
         }
     }
@@ -61,68 +82,56 @@ fn part_one(input: &Vec<Vec<char>>) -> u32 {
     sum
 }
 
-fn part_two(input: &Vec<Vec<char>>) -> u32 {
+fn part_two(schematic: &HashMap<Point, Part>) -> u32 {
     let mut sum = 0;
-    let pattern = Regex::new(r"\d+").unwrap();
+    let mut gear_numbers: Vec<(&Part, Point)> = vec![];
 
-    let mut parts: Vec<(u32, usize, usize)> = vec![];
+    for ((row, col), part) in schematic {
+        match part {
+            Part::Symbol(_) => continue,
+            Part::Number((number, length)) => {
+                let mut gear_index: Option<Point> = None;
 
-    for (i, line) in input.iter().enumerate() {
-        let line_string = line.into_iter().collect::<String>();
-        let matches: Vec<Match> = pattern.find_iter(line_string.as_str()).collect();
+                for x in (*col..(col + length)) {
+                    let checks = [
+                        (row - 1, x - 1),
+                        (row - 1, x),
+                        (row - 1, x + 1),
+                        (*row, x - 1),
+                        (*row, x + 1),
+                        (row + 1, x - 1),
+                        (row + 1, x),
+                        (row + 1, x + 1),
+                    ];
 
-        for m in matches {
-            let mut star_index: Option<(usize, usize)> = None;
-            let number = m.as_str().parse::<u32>().unwrap();
-            let start_index = m.start();
-            let end_index = m.end();
-
-            for j in start_index..end_index {
-                if i > 0 && j > 0 && input[i - 1][j - 1] == '*' {
-                    star_index = Some((i - 1, j - 1));
-                }
-                if i > 0 && input[i - 1][j] == '*' {
-                    star_index = Some((i - 1, j));
-                }
-                if i > 0 && j < line.len() - 1 && input[i - 1][j + 1] == '*' {
-                    star_index = Some((i - 1, j + 1));
-                }
-
-                if j < line.len() - 1 && input[i][j + 1] == '*' {
-                    star_index = Some((i, j + 1));
-                }
-                if j > 0 && input[i][j - 1] == '*' {
-                    star_index = Some((i, j - 1));
+                    for check in checks {
+                        if let Some(other) = schematic.get(&check) {
+                            match other {
+                                Part::Symbol('*') => gear_index = Some(check),
+                                Part::Number(_) | Part::Symbol(_) => continue,
+                            }
+                        }
+                    }
                 }
 
-                if i < input.len() - 1 && j > 0 && input[i + 1][j - 1] == '*' {
-                    star_index = Some((i + 1, j - 1));
+                if let Some(point) = gear_index {
+                    gear_numbers.push((part, point));
                 }
-                if i < input.len() - 1 && input[i + 1][j] == '*' {
-                    star_index = Some((i + 1, j));
-                }
-                if i < input.len() - 1 && j < line.len() - 1 && input[i + 1][j + 1] == '*' {
-                    star_index = Some((i + 1, j + 1));
-                }
-            }
-
-            if let Some((row, col)) = star_index {
-                parts.push((number, row, col));
             }
         }
     }
 
-    for i in 0..parts.len() - 1 {
-        for j in (i + 1)..parts.len() {
-            if parts[i].1 == parts[j].1 && parts[i].2 == parts[j].2 {
-                sum += parts[i].0 * parts[j].0
+    for i in 0..gear_numbers.len() - 1 {
+        for j in (i + 1)..gear_numbers.len() {
+            if let (Part::Number((num_1, _)), point) = gear_numbers[i] {
+                if let (Part::Number((num_2, _)), other_point) = gear_numbers[j] {
+                    if point == other_point {
+                        sum += num_1 * num_2;
+                    }
+                }
             }
         }
     }
 
     sum
-}
-
-fn is_symbol(char: char) -> bool {
-    char != '.' && !char.is_numeric()
 }
