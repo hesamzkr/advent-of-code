@@ -1,7 +1,7 @@
 use regex::{Match, Regex};
 use std::collections::HashMap;
 
-#[derive(Eq, Hash, PartialEq, Debug)]
+#[derive(Eq, Hash, PartialEq)]
 enum Part {
     Number((u32, isize)), // (number, length)
     Symbol(char),
