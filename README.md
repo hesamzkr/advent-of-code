@@ -23,9 +23,9 @@ Click on the stars to open the days solution
 | Day         | 2020                           | 2021                                               | 2022                                               | 2023                                              |
 | ----------- | ------------------------------ | -------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------- |
 | 1           | [:star2:](2020/Day1/Day1.cs)   | [:star2:](2021-23/src/solutions/year2021/day1.rs)  | [:star2:](2021-23/src/solutions/year2022/day1.rs)  | [:star2:](2021-23/src/solutions/year2023/day1.rs) |
-| 2           | [:star2:](2020/Day2/Day2.cs)   | [:star2:](2021-23/src/solutions/year2021/day2.rs)  | [:star2:](2021-23/src/solutions/year2022/day2.rs)  |                                                   |
-| 3           | [:star2:](2020/Day3/Day3.cs)   | [:star2:](2021-23/src/solutions/year2021/day3.rs)  | [:star2:](2021-23/src/solutions/year2022/day3.rs)  |                                                   |
-| 4           | [:star2:](2020/Day4/Day4.cs)   | [:star2:](2021-23/src/solutions/year2021/day4.rs)  | [:star2:](2021-23/src/solutions/year2022/day4.rs)  |                                                   |
+| 2           | [:star2:](2020/Day2/Day2.cs)   | [:star2:](2021-23/src/solutions/year2021/day2.rs)  | [:star2:](2021-23/src/solutions/year2022/day2.rs)  | [:star2:](2021-23/src/solutions/year2023/day2.rs) |
+| 3           | [:star2:](2020/Day3/Day3.cs)   | [:star2:](2021-23/src/solutions/year2021/day3.rs)  | [:star2:](2021-23/src/solutions/year2022/day3.rs)  | [:star2:](2021-23/src/solutions/year2023/day3.rs) |
+| 4           | [:star2:](2020/Day4/Day4.cs)   | [:star2:](2021-23/src/solutions/year2021/day4.rs)  | [:star2:](2021-23/src/solutions/year2022/day4.rs)  | [:star2:](2021-23/src/solutions/year2023/day4.rs) |
 | 5           | [:star2:](2020/Day5/Day5.cs)   | [:star2:](2021-23/src/solutions/year2021/day5.rs)  | [:star2:](2021-23/src/solutions/year2022/day5.rs)  |                                                   |
 | 6           | [:star2:](2020/Day6/Day6.cs)   | [:star2:](2021-23/src/solutions/year2021/day6.rs)  | [:star2:](2021-23/src/solutions/year2022/day6.rs)  |                                                   |
 | 7           | [:star:](2020/Day7/Day7.cs)    | [:star2:](2021-23/src/solutions/year2021/day7.rs)  | [:star2:](2021-23/src/solutions/year2022/day7.rs)  |                                                   |
