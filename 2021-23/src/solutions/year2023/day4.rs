@@ -1,4 +1,4 @@
-use std::{collections::HashMap, usize};
+use std::collections::HashMap;
 
 #[derive(Clone, PartialEq, Eq, Hash)]
 struct Card {
@@ -37,43 +37,26 @@ pub fn run(input: String) -> (u32, u32) {
 }
 
 fn part_one(cards: &Vec<Card>) -> u32 {
-    let mut sum = 0;
-
-    for card in cards {
-        let mut points = 0;
-
-        for number in &card.yours {
-            if card.winning.contains(number) {
-                if points == 0 {
-                    points = 1;
-                } else {
-                    points *= 2;
-                }
-            }
-        }
-
-        sum += points;
-    }
-
-    sum
+    cards
+        .iter()
+        .map(|card| {
+            card.yours
+                .iter()
+                .filter(|number| card.winning.contains(number))
+                .fold(0, |acc, _| if acc == 0 { 1 } else { acc * 2 })
+        })
+        .sum()
 }
 
 fn part_two(cards: &Vec<Card>) -> u32 {
     let mut cards_map: HashMap<usize, u32> = cards.iter().map(|card| (card.number, 1)).collect();
 
-    for card_number in 0..cards.len() {
-        let mut matches = 0;
-        let card = cards
+    for (card_number, card) in cards.iter().enumerate() {
+        let matches = card
+            .yours
             .iter()
-            .filter(|card| card.number == card_number)
-            .next()
-            .unwrap();
-
-        for number in &card.yours {
-            if card.winning.contains(&number) {
-                matches += 1;
-            }
-        }
+            .filter(|number| card.winning.contains(number))
+            .count();
 
         for i in 1..=matches {
             let card_check = cards
